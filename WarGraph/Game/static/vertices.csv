@@ -1,0 +1,5 @@
+Nome,X,Y,Suprimentos,Medicamentos,Forca,Base,Area
+Belo Horizonte,20,20,0,0,0,True,0
+Divinopolis,0,0,20,30,80,True,100
+Lavras,5,15,0,0,50,False,30
+Carmo do Cajuru,1,1,10,10,20,False,10
