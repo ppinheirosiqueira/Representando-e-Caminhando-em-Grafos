@@ -1,4 +1,6 @@
 import csv
+import copy
+import random
 
 # Como estou imaginando um cenário com bases principais que possuem pontos em volta, apesar das bases serem bem conectadas com esses pontos e entre si, o grafo não será absurdamente denso
 # Assim, é melhor utilizar uma lista de adjacentes
@@ -11,7 +13,7 @@ class Vertice:
         self.Suprimentos = int(sup)
         self.Medicamentos = int(med)
         self.Strength = int(forca)
-        self.base = base
+        self.base = bool(base)
         self.area = int(area)
         self.visitado = False
         self.vizinhos = list()
@@ -55,10 +57,25 @@ class Graph:
         #     #return True
         #else:
         #    return False
+
+    def copy(self):
+        gaux = Graph()
+        gaux.vertices = copy.deepcopy(self.vertices)
+        return gaux
     
     def print_graph(self):
         for key in sorted(list(self.vertices.keys())):
-            print(key + " " + str(self.vertices[key].vizinhos))
+            print(key + " visitado: " + str(self.vertices[key].visitado) + " base: " + str(self.vertices[key].base))
+
+    def randomVertice(self):
+        key = random.choice(list(self.vertices))
+        return key
+    
+    def reset(self):
+        for key in sorted(list(self.vertices.keys())):
+            del self.vertices[key]
+    
+        self = colher_dados()
 
 def colher_dados():
     g = Graph()

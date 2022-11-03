@@ -1,0 +1,17 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>War Graph</title>
+        <link href="{% static 'style.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div>Vida: {{vida}}</div>
+        <div>Área: {{area}}</div>
+        <div>Suprimentos: {{suprimentos}}</div>
+        <br><br>
+        <a href="reset">Resetar Jogo</a>
+    </body>
+</html>
