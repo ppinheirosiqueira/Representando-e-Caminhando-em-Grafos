@@ -1,11 +1,10 @@
 import random
 
 class Personagem:
-    def __init__(self, key, dificuldade):
+    def __init__(self, key):
         self.Localizacao = key
-        aux = retornarDificuldade(dificuldade)
-        self.Suprimentos = aux[0]
-        self.Vida = aux[1]
+        self.Suprimentos = 100
+        self.Vida = 100
         self.Area = 0
     
     def att_local(self, key):
@@ -28,8 +27,10 @@ class Personagem:
         else:
             return False
 
-    def att_area(self,valor):
-        self.Area = self.Area + valor
+    def att_tudo(self,valorArea, valorMed, valorSup):
+        self.Area = self.Area + valorArea
+        self.Vida = self.Vida + valorMed
+        self.Suprimentos = self.Suprimentos + valorSup
 
     def print_personagem(self):
         print("O personagem atualmente está em " + self.Localizacao + ", tem " + str(self.Vida) + " de vida, com suprimentos para andar mais " + str(self.Suprimentos) + " e já conquistou " + str(self.Area))

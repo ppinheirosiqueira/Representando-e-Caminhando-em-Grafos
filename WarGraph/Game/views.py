@@ -7,14 +7,15 @@ from . import game
 
 dificuldade = 2
 g  = graph.colher_dados() # Inicia o Grafo
-p = game.Personagem(g.randomVertice(),dificuldade) # Inicia o Personagem
+p = game.Personagem(g.randomVertice()) # Inicia o Personagem
 
 # Create your views here.
 
 def index(request): # Tela Inicial
 
-    return HttpResponse("Oi")
-
+    g2 = g.copy()
+    graph.guloso_facil(g2,p.Localizacao)  
+    return HttpResponse("<a href='jogo'>Jogar</a>")
     return HttpResponseRedirect(reverse('jogo',None))
 
 def jogo(request):  
@@ -30,8 +31,6 @@ def jogo(request):
 
     print("O personagem está em: " + p.Localizacao)
 
-    g2 = g.copy()
-
     g.add_vertice(graph.Vertice("Teste",10,12,24,52,12,False,25))
     g2.add_vertice(graph.Vertice("Pedras",3,2,10,10,20,False,10))
 
@@ -44,8 +43,7 @@ def jogo(request):
     mapa = "Estou em " + p.Localizacao + "<br>"
     for vizinho in g.vertices[p.Localizacao].Vizinhos:
         if(g.vertices[vizinho].Base or not g.vertices[vizinho].Visitado):
-            mapa = mapa + '<a href="escolha/' +  vizinho + '">' + vizinho + '</a><br>'
-
+            mapa = mapa + '<a href="escolha/' +  vizinho + '">' + '<button type="button" href="escolha/' + vizinho + '">' +  vizinho + '</button></a><br>'
 
     return render(request, "index.html", {
         "vida": p.Vida,
@@ -62,14 +60,15 @@ def escolha(request,nome):
     p.att_sup(distancia) # Personagem anda até lá
 
     if not g.vertices[nome].Visitado:
-        p.att_area(g.vertices[nome].Area)
-
-    g.vertices[nome].Visitado = True
-
-    game.combate(distancia,p,g.vertices[nome])
+        game.combate(distancia,p,g.vertices[nome])
 
     if p.Vida < 0 :
         return HttpResponseRedirect(reverse('fim',None))
+
+    if not g.vertices[nome].Visitado:
+        p.att_tudo(g.vertices[nome].Area,g.vertices[nome].Medicamentos,g.vertices[nome].Suprimentos)
+
+    g.vertices[nome].Visitado = True
 
     p.att_local(nome)
 
@@ -85,6 +84,6 @@ def fim(request):
 
 def reset(request):
     g.reset() # Inicia o Grafo
-    p.__init__(g.randomVertice(),dificuldade) # Inicia o Personagem
+    p.__init__(g.randomVertice()) # Inicia o Personagem
 
     return HttpResponseRedirect(reverse('jogo',None))
