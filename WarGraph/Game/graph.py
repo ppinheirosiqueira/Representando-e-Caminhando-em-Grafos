@@ -13,15 +13,15 @@ class Vertice:
         self.Suprimentos = int(sup)
         self.Medicamentos = int(med)
         self.Strength = int(forca)
-        self.base = bool(base)
-        self.area = int(area)
-        self.visitado = False
-        self.vizinhos = list()
+        self.Base = bool(int(base))
+        self.Area = int(area)
+        self.Visitado = False
+        self.Vizinhos = list()
     
     def add_vizinho(self,v):
-        if v not in self.vizinhos:
-            self.vizinhos.append(v)
-            self.vizinhos.sort()
+        if v not in self.Vizinhos:
+            self.Vizinhos.append(v)
+            self.Vizinhos.sort()
     
     def att_sup(self):
         self.Suprimentos = 0
@@ -30,10 +30,12 @@ class Vertice:
         self.Medicamentos = 0
     
     def att_vis(self):
-        self.visitado = True
+        self.Visitado = True
 
 class Graph:
-    vertices = {}
+
+    def __init__(self):
+        self.vertices = {}
 
     def add_vertice(self,v):
         if isinstance(v,Vertice) and v.name not in self.vertices:
@@ -65,7 +67,7 @@ class Graph:
     
     def print_graph(self):
         for key in sorted(list(self.vertices.keys())):
-            print(key + " visitado: " + str(self.vertices[key].visitado) + " base: " + str(self.vertices[key].base))
+            print(key + ", visitado: " + str(self.vertices[key].Visitado) + ", base: " + str(self.vertices[key].Base))
 
     def randomVertice(self):
         key = random.choice(list(self.vertices))
@@ -75,7 +77,7 @@ class Graph:
         for key in sorted(list(self.vertices.keys())):
             del self.vertices[key]
     
-        self = colher_dados()
+        self.vertices = colher_dados().vertices
 
 def colher_dados():
     g = Graph()

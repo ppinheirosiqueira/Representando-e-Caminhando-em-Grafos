@@ -1,19 +1,15 @@
 import random
 
 class Personagem:
-    def __init__(self, g, key, dificuldade):
+    def __init__(self, key, dificuldade):
         self.Localizacao = key
-        self.X = int(g.vertices[key].X)
-        self.Y = int(g.vertices[key].Y)
         aux = retornarDificuldade(dificuldade)
         self.Suprimentos = aux[0]
         self.Vida = aux[1]
         self.Area = 0
     
-    def att_local(self, g, key):
+    def att_local(self, key):
         self.Localizacao = key
-        self.X = int(g.vertices[key].X)
-        self.Y = int(g.vertices[key].Y)
     
     def att_sup(self,distancia):
         if distancia > self.Suprimentos:
@@ -31,12 +27,15 @@ class Personagem:
             return True
         else:
             return False
-    
-    def print_personagem(self):
-        print("O personagem atualmente está nas coordenadas (" + str(self.X) + "," + str(self.Y) + "), tem " + str(self.Vida) + " de vida, com suprimentos para andar mais " + str(self.Suprimentos) + " e já conquistou " + str(self.Area))
 
-def distancia(xi,xf,yi,yf):
-    return abs(xf-xi) + abs(yf-yi) # Utilizando distância de Manhattan para não lidar com números quebrados
+    def att_area(self,valor):
+        self.Area = self.Area + valor
+
+    def print_personagem(self):
+        print("O personagem atualmente está em " + self.Localizacao + ", tem " + str(self.Vida) + " de vida, com suprimentos para andar mais " + str(self.Suprimentos) + " e já conquistou " + str(self.Area))
+
+def distancia(p,nome,g):
+    return abs(g.vertices[p.Localizacao].X - g.vertices[nome].X) + abs(g.vertices[p.Localizacao].Y - g.vertices[nome].Y) # Utilizando distância de Manhattan para não lidar com números quebrados
 
 def descobrir_localizacao(g,p):
     for key in list(g.vertices.keys()):
