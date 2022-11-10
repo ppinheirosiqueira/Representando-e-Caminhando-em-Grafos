@@ -1,7 +1,7 @@
 import random
 
-def distancia(p,nome,g):
-    return abs(g.vertices[p.Localizacao].X - g.vertices[nome].X) + abs(g.vertices[p.Localizacao].Y - g.vertices[nome].Y) # Utilizando distância de Manhattan para não lidar com números quebrados
+def distancia(estou,vou,g):
+    return abs(g.vertices[estou].X - g.vertices[vou].X) + abs(g.vertices[estou].Y - g.vertices[vou].Y) # Utilizando distância de Manhattan para não lidar com números quebrados
 
 def descobrir_localizacao(g,p):
     for key in list(g.vertices.keys()):

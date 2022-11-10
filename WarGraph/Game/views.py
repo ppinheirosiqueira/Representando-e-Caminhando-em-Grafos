@@ -4,17 +4,20 @@ from django.urls import reverse
 
 from . import graph
 from . import game
+from . import arquivos
+from . import classes
 
 dificuldade = 2
-g  = graph.colher_dados() # Inicia o Grafo
-p = game.Personagem(g.randomVertice()) # Inicia o Personagem
+g  = arquivos.colher_dados() # Inicia o Grafo
+p = classes.Personagem(g.randomVertice()) # Inicia o Personagem
 
 # Create your views here.
 
 def index(request): # Tela Inicial
 
     g2 = g.copy()
-    graph.guloso_facil(g2,p.Localizacao)  
+    graph.guloso_facil(g2,p.Localizacao)
+    graph.BFS(g,p)  
     return HttpResponse("<a href='jogo'>Jogar</a>")
     return HttpResponseRedirect(reverse('jogo',None))
 
@@ -55,9 +58,9 @@ def jogo(request):
 def escolha(request,nome):
     # Já tendo a posição do jogador e o nome do Vértice que ele quer ir, é possível andar
 
-    distancia = game.distancia(p,nome,g)
+    distancia = game.distancia(p.Localizacao,nome,g)
 
-    p.att_sup(distancia) # Personagem anda até lá
+    p.gastar_sup(distancia) # Personagem anda até lá
 
     if not g.vertices[nome].Visitado:
         game.combate(distancia,p,g.vertices[nome])

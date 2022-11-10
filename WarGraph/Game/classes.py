@@ -94,8 +94,7 @@ class Personagem:
         else:
             return False
 
-    def conquistando(self, nome, valorArea, valorMed, valorSup):
-        self.Localizacao = nome
+    def conquistando(self, valorArea, valorMed, valorSup):
         self.Area = self.Area + valorArea
         self.Vida = self.Vida + valorMed
         self.Suprimentos = self.Suprimentos + valorSup
