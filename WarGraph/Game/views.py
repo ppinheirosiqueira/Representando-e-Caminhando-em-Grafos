@@ -8,47 +8,99 @@ from . import arquivos
 from . import classes
 
 dificuldade = 2
+inicial = " "
 g  = arquivos.colher_dados() # Inicia o Grafo
-p = classes.Personagem(g.randomVertice()) # Inicia o Personagem
 
 # Create your views here.
 
 def index(request): # Tela Inicial
 
+    body = '<h1 class="title">WAR GRAPH</h1>'
+    body = body + '<div class="middle">'
+    body = body + '<a href="start" class="btn btn1">Start game</a>'
+    body = body + '<a href="cidade" class="btn btn2">City</a>'
+    body = body + '<a href="dificuldade" class="btn btn3">Mode</a>'
+    body = body + '<a href="about" class="btn btn4">About</a>'
+    body = body + '</div>'
+
+    return render(request, "menu.html", {
+        "body": body,
+        "title": "WAR GRAPH",
+    })
+
+def dificuldade(request):
+    body = '<h1 class="title">DIFICULDADE</h1>'
+    body = body + '<div class="middle">'
+    body = body + '<a href="dificuldade/facil" class="btn btn3">Easy</a>'
+    body = body + '<a href="dificuldade/media" class="btn btn3">Normal</a>'
+    body = body + '<a href="dificuldade/dificil" class="btn btn3">Hard</a>'
+    body = body + '</div>'
+
+    return render(request, "menu.html", {
+        "body": body,
+        "title": "Dificuldade",
+    })
+
+def esc_dificuldade(request, escolha):
+    global dificuldade
+    if escolha == "facil":
+        dificuldade = 1
+    elif escolha == "media":
+        dificuldade = 2
+    else:
+        dificuldade = 3
+    return HttpResponseRedirect(reverse('index',None))
+
+def cidade(request):
+    cidades = g.cidades()
+    print(cidades)
+    body = '<h1 class="title">CIDADES</h1>'
+    body = body + '<div class="middle">'
+    for cidade in cidades:
+        body = body + '<a href="cidade/' + cidade + '" class="btn btn2">' + cidade + '</a>'
+    body = body + '</div>'
+
+    return render(request, "menu.html", {
+        "body": body,
+        "title": "Cidades",
+    })
+
+def esc_cidade(request,escolha):
+    global inicial
+    inicial = escolha
+    return HttpResponseRedirect(reverse('index',None))
+
+def start(request):
+    global area_obj
+    global p
+    
+    if inicial != " ":
+        p = classes.Personagem(inicial,g, dificuldade) # Inicia o Personagem com a cidade escolhida inicialmente
+    else:
+        p = classes.Personagem(g.randomVertice(),g, dificuldade) # Inicia o Personagem com uma cidade randômica
+
+    g.vertices[p.Localizacao].Visitado = True
     g2 = g.copy()
-    graph.guloso_facil(g2,p.Localizacao)
-    graph.BFS(g,p)  
-    return HttpResponse("<a href='jogo'>Jogar</a>")
+    if dificuldade == 1:
+        area_obj = graph.guloso_facil(g2,p)
+    elif dificuldade == 2:
+        area_obj = graph.guloso_medio(g2,p)
+    else:
+        area_obj = graph.guloso_dificil(g2,p)
     return HttpResponseRedirect(reverse('jogo',None))
 
 def jogo(request):  
-    
-    """
-    print()
-    g.print_graph()
-    print()
-    p.print_personagem()
-    print()
-
-    #loc = game.descobrir_localizacao(g,p)
-
-    print("O personagem está em: " + p.Localizacao)
-
-    g.add_vertice(graph.Vertice("Teste",10,12,24,52,12,False,25))
-    g2.add_vertice(graph.Vertice("Pedras",3,2,10,10,20,False,10))
-
-    print()
-    g.print_graph()
-    print() 
-    g2.print_graph()
-    print()"""
+    global area_obj
+    chance = graph.BFS(g,p,area_obj,dificuldade)
 
     mapa = "Estou em " + p.Localizacao + "<br>"
+    mapa = mapa + "O meu objetivo é ter " + str(area_obj) + " de area<br>"
+    mapa = mapa + "Possuo " + str(round(chance,2)) + "% de chance de vitória<br>"
     for vizinho in g.vertices[p.Localizacao].Vizinhos:
         if(g.vertices[vizinho].Base or not g.vertices[vizinho].Visitado):
             mapa = mapa + '<a href="escolha/' +  vizinho + '">' + '<button type="button" href="escolha/' + vizinho + '">' +  vizinho + '</button></a><br>'
 
-    return render(request, "index.html", {
+    return render(request, "jogo.html", {
         "vida": p.Vida,
         "area": p.Area,
         "suprimentos": p.Suprimentos,
@@ -56,6 +108,7 @@ def jogo(request):
     })
 
 def escolha(request,nome):
+    global area_obj
     # Já tendo a posição do jogador e o nome do Vértice que ele quer ir, é possível andar
 
     distancia = game.distancia(p.Localizacao,nome,g)
@@ -69,11 +122,14 @@ def escolha(request,nome):
         return HttpResponseRedirect(reverse('fim',None))
 
     if not g.vertices[nome].Visitado:
-        p.att_tudo(g.vertices[nome].Area,g.vertices[nome].Medicamentos,g.vertices[nome].Suprimentos)
+        p.conquistando(g.vertices[nome].Area,g.vertices[nome].Medicamentos,g.vertices[nome].Suprimentos)
 
     g.vertices[nome].Visitado = True
 
     p.att_local(nome)
+
+    if p.Area >= area_obj:
+        return HttpResponseRedirect(reverse('fim',None))
 
     return HttpResponseRedirect(reverse('jogo',None))
 
@@ -86,7 +142,12 @@ def fim(request):
     })
 
 def reset(request):
-    g.reset() # Inicia o Grafo
-    p.__init__(g.randomVertice()) # Inicia o Personagem
+    global inicial
+    global p
+    global dificuldade
+    g.reset() # Reinicia o Grafo
+    inicial = " " # Coloca a cidade inicial como randomica novamente
+    dificuldade = 2 # Reseta a dificuldade para normal
+    del p # Apaga o Personagem
 
-    return HttpResponseRedirect(reverse('jogo',None))
+    return HttpResponseRedirect(reverse('index',None))

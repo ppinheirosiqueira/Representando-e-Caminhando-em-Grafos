@@ -13,11 +13,3 @@ def combate(dis,p,v):
     if (dis/100 < random.random()): # Se a distância for pequena demais, a chance de combate é baixa
         return 
     p.apos_luta(v.Strength)
-
-def retornarDificuldade(dificuldade):
-    if dificuldade == 1:
-        return [150,150]
-    elif dificuldade == 2:
-        return [100,100]
-    else:
-        return [50,50]

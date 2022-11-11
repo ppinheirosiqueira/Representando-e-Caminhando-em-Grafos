@@ -55,11 +55,23 @@ class Graph:
     
     def print_graph(self):
         for key in sorted(list(self.vertices.keys())):
-            print(key + ", visitado: " + str(self.vertices[key].Visitado) + ", base: " + str(self.vertices[key].Base))
+            print("Cidade: " + key + ", visitado: " + str(self.vertices[key].Visitado) + ", base: " + str(self.vertices[key].Base))
+            print("Vizinhos: ")
+            print(self.vertices[key].Vizinhos)
 
     def randomVertice(self):
         key = random.choice(list(self.vertices))
         return key
+
+    def visitados(self):
+        visitados = []
+        for key in sorted(list(self.vertices.keys())):
+            if self.vertices[key].Visitado:
+                visitados.append(key)
+        return visitados
+
+    def cidades(self):
+        return sorted(list(self.vertices.keys()))
     
     def reset(self):
         for key in sorted(list(self.vertices.keys())):
@@ -68,11 +80,12 @@ class Graph:
         self.vertices = arquivos.colher_dados().vertices
 
 class Personagem:
-    def __init__(self, key):
+    def __init__(self, key, g, dificuldade):
         self.Localizacao = key
-        self.Suprimentos = 100
-        self.Vida = 100
-        self.Area = 0
+        self.retornarDificuldade(dificuldade)
+        self.Suprimentos = self.Suprimentos  + g.vertices[key].Suprimentos
+        self.Vida = self.Vida + g.vertices[key].Medicamentos
+        self.Area = 0 + g.vertices[key].Area
     
     def att_local(self, key):
         self.Localizacao = key
@@ -101,3 +114,28 @@ class Personagem:
 
     def print_personagem(self):
         print("O personagem atualmente está em " + self.Localizacao + ", tem " + str(self.Vida) + " de vida, com suprimentos para andar mais " + str(self.Suprimentos) + " e já conquistou " + str(self.Area))
+
+    def copy(self,g,dificuldade):
+        p = Personagem(self.Localizacao,g, dificuldade)
+        p.Area = self.Area
+        p.Vida = self.Vida
+        p.Suprimentos = self.Suprimentos
+        p.Localizacao = self.Localizacao
+
+        return p
+    
+    def retornarDificuldade(self, dificuldade):
+        if dificuldade == 1:
+            self.Suprimentos = 100
+            self.Vida = 100
+        elif dificuldade == 2:
+            self.Suprimentos = 75
+            self.Vida = 75        
+        else:
+            self.Suprimentos = 50
+            self.Vida = 50
+
+class BFS_point:
+    def __init__(self, personagem, g, dificuldade, lista):
+        self.personagem = personagem.copy(g,dificuldade)
+        self.lista = copy.deepcopy(lista)
