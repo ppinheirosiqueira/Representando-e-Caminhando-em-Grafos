@@ -9,9 +9,12 @@
         <script src="{% static 'script.js' %}" defer></script>
     </head>
     <body>
-        {{mapa | safe}}
-        ❤️: {{vida}}
-        🍗: {{suprimentos}}
-        Progresso Área Conquistada: <progress id="life-bar" max="{{ area_obj }}" value="{{ area }}"></progress>
+        <div class="jogo">
+            <h1 class="pontoatual">Você está em {{ localizacao }}</h1>
+            <div class="chance">Possui {{ chance }}% de vencer o jogo</div>
+            <div class="mapa">{{mapa | safe}}</div>
+            <div class="dados"><span>❤️: {{vida}}</span><span>🍗: {{suprimentos}}</span><span>Objetivo: {{ area_obj }}</span></div>
+            <div class="barra">Progresso Área Conquistada: <progress id="life-bar" max="{{ area_obj }}" value="{{ area }}"></progress></div>
+        </div>
     </body>
 </html>

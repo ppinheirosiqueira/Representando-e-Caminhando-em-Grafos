@@ -1,6 +1,5 @@
-from . import game
-from . import classes
 import copy
+from . import classes, game
 
 def guloso_facil(g,personagem):
     pAux = personagem.copy(g)
@@ -99,11 +98,12 @@ def BFS(g, personagem,area_obj):
     while len(andando) > 0: # Enquanto houver formas de andar
         print("\n")
         print("A lista andando tem tamanho atual de: " + str(len(andando)))
-        print("Olhando: " + andando[0].personagem.Localizacao)
+        print("Olhando: ")
+        andando[0].personagem.print_personagem()
         print("Que já andou por: " )
         print(andando[0].lista)
         auxLocais = copy.deepcopy(g.vertices[andando[0].personagem.Localizacao].Vizinhos) # Pego os vizinhos do primeiro ponto do vetor de andar
-        print("Falta andar por: ")
+        print("Vizinhos desse ponto: ")
         print(auxLocais)
         while len(auxLocais) > 0: # Enquanto houver vizinhos a visitar
             print("Testando: " + auxLocais[0])
@@ -124,7 +124,7 @@ def BFS(g, personagem,area_obj):
                 auxBFS.lista.append(auxLocais[0]) # Adiciono este ponto aos pontos visitados
                 auxBFS.personagem.att_local(auxLocais[0]) # Atualizo onde o personagem está
                 andando.append(auxBFS) # Adiciono o ponto para ser visitado em seguida
-                print("Ponto adicionado para andar: " + auxBFS.personagem.Localizacao)
+                print("Ponto adicionado para andar")
             else:
                 print("Ponto não adicionado porque já foi visitado")
             auxLocais.pop(0) # Retiro o primeiro ponto dos q precisam ser visitados

@@ -3,7 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.index, name="index"),
     path('start', views.start, name="start"),
     path('jogo', views.jogo, name="jogo"),
     path('escolha/<str:nome>', views.escolha, name="escolha"),
@@ -12,5 +12,6 @@ urlpatterns = [
     path('cidade', views.cidade, name="cidade"),
     path('cidade/<str:escolha>', views.esc_cidade, name="escolha_cidade"),
     path('FimDeJogo', views.fim, name="fim"),
-    path('reset', views.reset, name="reset")
+    path('reset', views.reset, name="reset"),
+    path('about', views.about, name="about")
 ]

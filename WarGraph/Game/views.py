@@ -1,11 +1,8 @@
-from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
 
-from . import graph
-from . import game
-from . import arquivos
-from . import classes
+from . import arquivos, classes, game, graph
 
 dificuldade = 2
 inicial = " "
@@ -94,19 +91,32 @@ def start(request):
 def jogo(request):  
     global area_obj
     chance = graph.BFS(g,p,area_obj)
+    
+    bigX = g.vertices[p.Localizacao].X
+    bigY = g.vertices[p.Localizacao].Y
 
-    mapa = "<h1 class='pontoatual'>Você está em " + p.Localizacao + "</h1>"
-    mapa = mapa + "Possuo " + str(round(chance,2)) + "% de chance de vitória<br>"
+    for vizinho in g.vertices[p.Localizacao].Vizinhos:
+        if g.vertices[vizinho].X > bigX:
+            bigX = g.vertices[vizinho].X
+        if g.vertices[vizinho].Y > bigY:
+            bigY = g.vertices[vizinho].Y
+
+    bigX = bigX*1.1
+    bigY = bigY*1.1
+
+    mapa = ""
     for vizinho in g.vertices[p.Localizacao].Vizinhos:
         if(g.vertices[vizinho].Base or not g.vertices[vizinho].Visitado):
-            mapa = mapa + '<a href="escolha/' +  vizinho + '">' + '<button type="button" href="escolha/' + vizinho + '">' +  vizinho + '</button></a><br>'
+            mapa = mapa + '<a href="escolha/' +  vizinho + '" style="top:' + str(100*g.vertices[vizinho].X/bigX) + '%;left:' + str(100*g.vertices[vizinho].Y/bigY) + '%;">' + '<button type="button" href="escolha/' + vizinho + '">' +  vizinho + '</button></a><br>'
 
     return render(request, "jogo.html", {
+        "localizacao": p.Localizacao,
         "vida": p.Vida,
         "area": p.Area,
         "suprimentos": p.Suprimentos,
         "mapa": mapa,
         "area_obj": area_obj,
+        "chance": round(chance,2),    
     })
 
 def escolha(request,nome):
@@ -153,3 +163,6 @@ def reset(request):
     del p # Apaga o Personagem
 
     return HttpResponseRedirect(reverse('index',None))
+
+def about(request):
+    return render(request, "about.html")

@@ -1,10 +1,14 @@
 /* ALL PAGES */
 
+html{
+    height: 100%;
+}
+
 body {
     background-color: #c2b280;
     color: black;
-    height: auto;
     margin: 0;
+    height: 90%;
     
     justify-content: center;
     align-items: center;
@@ -17,7 +21,7 @@ body {
     font-size: 100px;
     color: black;
     text-align: center;
-    margin-top: 5%;
+    padding-top: 5%;
 }
 
 .middle {
@@ -104,13 +108,48 @@ body {
     margin-right: 5%;
 }
 
-/* BH PAGE */
+/* JOGO PAGE */
 
-.pontoatual{
-    margin-left: 20px;
+.jogo{
+    display: grid;
+    grid-template-areas:
+      'header chance'
+      'mapa mapa'
+      'dados barra';
+    padding: 5%;
+    width: 85%;
+    height: 85%;
+    grid-template-rows: 10% 80% 10%;
+    grid-template-columns: 50% 50%;
+    row-gap: 5%;
 }
 
-#life-bar{
+.jogo .mapa{
+    grid-area: mapa;
+    position: relative;
+    border: 2px solid #000000;
+    width: auto;
+    height: auto;
+}
+
+.jogo .mapa a{
+    position: absolute;
+}
+
+.jogo .chance{
+    grid-area: chance;
+}
+
+.jogo .pontoatual{
+    margin-left: 20px;
+    grid-area: header;
+}
+
+.jogo .barra{
+    grid-area: barra;
+}
+
+.jogo .barra #life-bar{
     background-color: green;
     border: medium solid black;
     border-radius: 10px;
@@ -121,14 +160,25 @@ body {
     margin-left: 20px;
     /* margin-top: 35%; */
 
-    position: fixed;
-    bottom: 30px;
-
     text-align: center;
 }
 
+.jogo .dados{
+    grid-area: dados;
+    display: grid;
+    grid-template-columns: auto;
+    padding-inline: 10%;
+}
+
 .texto {
-    margin-bottom: 500%;
+    margin-inline: 10%;
+    text-align: justify;
+    font-size: 20px;
+    line-height: 105%;    
+}
+
+.texto p::first-letter{
+    font-size: 30px;
 }
 
 .items1 {
