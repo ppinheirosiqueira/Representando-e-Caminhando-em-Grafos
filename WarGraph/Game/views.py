@@ -55,7 +55,7 @@ def cidade(request):
     cidades = g.cidades()
     print(cidades)
     body = '<h1 class="title">CIDADES</h1>'
-    body = body + '<div class="middle">'
+    body = body + '<div class="cidade_menu">'
     for cidade in cidades:
         body = body + '<a href="cidade/' + cidade + '" class="btn btn2">' + cidade + '</a>'
     body = body + '</div>'
@@ -95,8 +95,7 @@ def jogo(request):
     global area_obj
     chance = graph.BFS(g,p,area_obj)
 
-    mapa = "Estou em " + p.Localizacao + "<br>"
-    mapa = mapa + "O meu objetivo é ter " + str(area_obj) + " de area<br>"
+    mapa = "<h1 class='pontoatual'>Você está em " + p.Localizacao + "</h1>"
     mapa = mapa + "Possuo " + str(round(chance,2)) + "% de chance de vitória<br>"
     for vizinho in g.vertices[p.Localizacao].Vizinhos:
         if(g.vertices[vizinho].Base or not g.vertices[vizinho].Visitado):
@@ -107,6 +106,7 @@ def jogo(request):
         "area": p.Area,
         "suprimentos": p.Suprimentos,
         "mapa": mapa,
+        "area_obj": area_obj,
     })
 
 def escolha(request,nome):

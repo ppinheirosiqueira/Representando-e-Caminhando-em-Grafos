@@ -6,11 +6,12 @@
     <head>
         <title>War Graph</title>
         <link href="{% static 'style.css' %}" rel="stylesheet">
+        <script src="{% static 'script.js' %}" defer></script>
     </head>
     <body>
         {{mapa | safe}}
-        <div>Vida: {{vida}}</div>
-        <div>Área: {{area}}</div>
-        <div>Suprimentos: {{suprimentos}}</div>
+        ❤️: {{vida}}
+        🍗: {{suprimentos}}
+        Progresso Área Conquistada: <progress id="life-bar" max="{{ area_obj }}" value="{{ area }}"></progress>
     </body>
 </html>
