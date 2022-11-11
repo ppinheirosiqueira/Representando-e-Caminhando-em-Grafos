@@ -27,7 +27,7 @@ body {
 .btn {
     position: relative;
     display: block;
-    color: rgb(255, 255, 255);
+    color: black;
     font-size: 14px;
     font-family: "montserrat";
     text-decoration: none;
@@ -38,6 +38,10 @@ body {
     overflow: hidden;
     transition: 1s all ease;
     text-align: center;
+}
+
+.btn:hover{
+    color: white;
 }
 
 .btn::before{

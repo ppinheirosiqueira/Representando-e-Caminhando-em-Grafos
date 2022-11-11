@@ -115,8 +115,8 @@ class Personagem:
     def print_personagem(self):
         print("O personagem atualmente está em " + self.Localizacao + ", tem " + str(self.Vida) + " de vida, com suprimentos para andar mais " + str(self.Suprimentos) + " e já conquistou " + str(self.Area))
 
-    def copy(self,g,dificuldade):
-        p = Personagem(self.Localizacao,g, dificuldade)
+    def copy(self,g):
+        p = Personagem(self.Localizacao,g, 1)
         p.Area = self.Area
         p.Vida = self.Vida
         p.Suprimentos = self.Suprimentos
@@ -136,6 +136,6 @@ class Personagem:
             self.Vida = 50
 
 class BFS_point:
-    def __init__(self, personagem, g, dificuldade, lista):
-        self.personagem = personagem.copy(g,dificuldade)
+    def __init__(self, personagem, g, lista):
+        self.personagem = personagem.copy(g)
         self.lista = copy.deepcopy(lista)

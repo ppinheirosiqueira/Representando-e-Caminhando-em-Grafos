@@ -75,9 +75,11 @@ def start(request):
     global p
     
     if inicial != " ":
-        p = classes.Personagem(inicial,g, dificuldade) # Inicia o Personagem com a cidade escolhida inicialmente
+        p = classes.Personagem(inicial, g, dificuldade) # Inicia o Personagem com a cidade escolhida inicialmente
     else:
         p = classes.Personagem(g.randomVertice(),g, dificuldade) # Inicia o Personagem com uma cidade randômica
+
+    p.print_personagem()
 
     g.vertices[p.Localizacao].Visitado = True
     g2 = g.copy()
@@ -91,7 +93,7 @@ def start(request):
 
 def jogo(request):  
     global area_obj
-    chance = graph.BFS(g,p,area_obj,dificuldade)
+    chance = graph.BFS(g,p,area_obj)
 
     mapa = "Estou em " + p.Localizacao + "<br>"
     mapa = mapa + "O meu objetivo é ter " + str(area_obj) + " de area<br>"
