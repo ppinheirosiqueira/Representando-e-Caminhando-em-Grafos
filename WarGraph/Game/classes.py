@@ -80,11 +80,10 @@ class Graph:
         self.vertices = arquivos.colher_dados().vertices
 
 class Personagem:
-    def __init__(self, key, g, dificuldade):
+    def __init__(self, key, g):
         self.Localizacao = key
-        self.retornarDificuldade(dificuldade)
-        self.Suprimentos = self.Suprimentos  + g.vertices[key].Suprimentos
-        self.Vida = self.Vida + g.vertices[key].Medicamentos
+        self.Suprimentos = 100  + g.vertices[key].Suprimentos
+        self.Vida = 100 + g.vertices[key].Medicamentos
         self.Area = 0 + g.vertices[key].Area
     
     def att_local(self, key):
@@ -116,24 +115,13 @@ class Personagem:
         print("O personagem atualmente está em " + self.Localizacao + ", tem " + str(self.Vida) + " de vida, com suprimentos para andar mais " + str(self.Suprimentos) + " e já conquistou " + str(self.Area))
 
     def copy(self,g):
-        p = Personagem(self.Localizacao,g, 1)
+        p = Personagem(self.Localizacao,g)
         p.Area = self.Area
         p.Vida = self.Vida
         p.Suprimentos = self.Suprimentos
         p.Localizacao = self.Localizacao
 
         return p
-    
-    def retornarDificuldade(self, dificuldade):
-        if dificuldade == 1:
-            self.Suprimentos = 100
-            self.Vida = 100
-        elif dificuldade == 2:
-            self.Suprimentos = 75
-            self.Vida = 75        
-        else:
-            self.Suprimentos = 50
-            self.Vida = 50
 
 class BFS_point:
     def __init__(self, personagem, g, lista):

@@ -31,6 +31,15 @@ body {
     transform: translate(-50%,-50%);
 }
 
+.middle .show{
+    border: 2px solid #000000;
+    color: black;
+    font-size: 14px;
+    text-transform: uppercase;
+    padding: 20px 30px;
+    line-height: 150%;
+}
+
 .btn {
     position: relative;
     display: block;
@@ -128,12 +137,55 @@ body {
     grid-area: mapa;
     position: relative;
     border: 2px solid #000000;
+    padding: 10px;
     width: auto;
     height: auto;
+    background-color: #000000;
 }
 
 .jogo .mapa a{
     position: absolute;
+}
+
+.jogo .mapa a .icones{
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+/* https://codepen.io/sosuke/pen/Pjoqqp */
+
+.filter-blue{
+    filter: invert(92%) sepia(3%) saturate(3582%) hue-rotate(163deg) brightness(89%) contrast(103%);
+}
+
+.filter-green{
+    filter: invert(78%) sepia(36%) saturate(463%) hue-rotate(69deg) brightness(101%) contrast(94%);
+}
+
+.filter-red{
+    filter: invert(20%) sepia(86%) saturate(7312%) hue-rotate(0deg) brightness(94%) contrast(118%);
+}
+
+.jogo .mapa a .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+  
+.jogo .mapa a:hover .tooltiptext {
+    visibility: visible;
 }
 
 .jogo .chance{

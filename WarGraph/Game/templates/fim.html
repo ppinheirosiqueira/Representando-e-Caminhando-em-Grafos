@@ -8,9 +8,17 @@
         <link href="{% static 'style.css' %}" rel="stylesheet">
     </head>
     <body>
-        <div>Vida: {{vida}}</div>
-        <div>Área: {{area}}</div>
-        <div>Suprimentos: {{suprimentos}}</div>
+        {% if vizinhos != 0 %}
+            {% if vida > 0 %}
+                Parabéns, você venceu!<br>
+                Sua vida final foi de {{ vida }} e a sua área final foi de {{ area }}
+            {% else %}
+                GAME OVER<br>
+                Seu exército morreu havendo conquistado só {{ area }} de {{ area_obj }}
+            {% endif %}
+        {% else %}
+            Você demorou tanto a agir que ficou completamente isolado do resto do mapa, não existe jogo para você
+        {% endif %}
         <br><br>
         <a href="reset">Resetar Jogo</a>
     </body>

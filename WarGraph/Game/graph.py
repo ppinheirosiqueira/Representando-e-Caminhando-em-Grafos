@@ -5,37 +5,37 @@ def guloso_facil(g,personagem):
     pAux = personagem.copy(g)
 
     while pAux.Vida > 0:
-        print("Localização Atual: " + pAux.Localizacao)
+        # print("Localização Atual: " + pAux.Localizacao)
         nomeVizinho = ""
         areaVizinho = -10
         for vizinho in g.vertices[pAux.Localizacao].Vizinhos:
             if g.vertices[vizinho].Area > areaVizinho and (not g.vertices[vizinho].Visitado or g.vertices[vizinho].Base):
                 areaVizinho = g.vertices[vizinho].Area
                 nomeVizinho = g.vertices[vizinho].name
-        
         apos_escolha(pAux,nomeVizinho,g)
     
     return pAux.Area
 
-def funcao_medio(area,medicamento,vida):
-    if vida > 100:
-        return area
-    return area + medicamento*(100-vida)/10
+def funcao_medio(area,medicamento,vida,exercito):
+    if vida > exercito:
+        return area + medicamento
+    return -1
 
 def guloso_medio(g,personagem):
     pAux = personagem.copy(g)
     pAux.print_personagem()
 
     while pAux.Vida > 0:
-        print("Localização Atual: " + pAux.Localizacao)
-        print("Vida Atual: " + str(pAux.Vida))
+        # print("Localização Atual: " + pAux.Localizacao)
+        # print("Vida Atual: " + str(pAux.Vida))
         nomeVizinho = ""
         areaVizinho = -10
         medicamentoVizinho = -10
-        GulosoVizinho = funcao_medio(areaVizinho,medicamentoVizinho,pAux.Vida)
+        exercitoVizinho = -10
+        GulosoVizinho = funcao_medio(areaVizinho,medicamentoVizinho,pAux.Vida,exercitoVizinho)
 
         for vizinho in g.vertices[pAux.Localizacao].Vizinhos:
-            auxGuloso = funcao_medio(g.vertices[vizinho].Area,g.vertices[vizinho].Medicamentos,pAux.Vida)
+            auxGuloso = funcao_medio(g.vertices[vizinho].Area,g.vertices[vizinho].Medicamentos,pAux.Vida,g.vertices[vizinho].Strength)
             if auxGuloso > GulosoVizinho and (not g.vertices[vizinho].Visitado or g.vertices[vizinho].Base):
                 GulosoVizinho = auxGuloso
                 nomeVizinho = g.vertices[vizinho].name
@@ -53,8 +53,8 @@ def guloso_dificil(g, personagem):
     pAux.print_personagem()
 
     while pAux.Vida > 0:
-        print("Localização Atual: " + pAux.Localizacao)
-        print("Vida Atual: " + str(pAux.Vida))
+        # print("Localização Atual: " + pAux.Localizacao)
+        # print("Vida Atual: " + str(pAux.Vida))
         nomeVizinho = ""
         areaVizinho = -10
         medicamentoVizinho = -10
@@ -77,15 +77,19 @@ def apos_escolha(personagem,nome,g):
     personagem.gastar_sup(distancia) # Personagem anda até lá
     if not g.vertices[nome].Visitado:
         personagem.apos_luta(g.vertices[nome].Strength) # Se não tiver ido lá é necessário lutar
-    if personagem.Vida < 0 :
+    if personagem.Vida <= 0 :
         return # Se morreu já volta
     if not g.vertices[nome].Visitado: # Se não morreu e não visitou
         personagem.conquistando(g.vertices[nome].Area,g.vertices[nome].Medicamentos,g.vertices[nome].Suprimentos)
-    g.vertices[nome].Visitado = True # Marcar que visitou independente de já ter visitado
     personagem.att_local(nome) # Atualiza o lugar que o algoritmo está
-    g.vertices[nome].Area = 0 # Muda a área conquistada para zero para futuras iterações
-    g.vertices[nome].Medicamentos = 0 # Muda os medicamentos da área conquistada para zero para futuras iterações
-    g.vertices[nome].Suprimentos = 0 # Muda os suprimentos da área conquistada para zero para futuras iterações
+    zerarNo(g,nome)
+
+def zerarNo(g,nome):
+    g.vertices[nome].Visitado = True
+    g.vertices[nome].Area = 0
+    g.vertices[nome].Strength = 0
+    g.vertices[nome].Suprimentos = 0
+    g.vertices[nome].Mediamentos = 0
 
 def BFS(g, personagem,area_obj):
     andando = [] # Vetor que conterá todas as opções de andado e que continuará andando
@@ -136,12 +140,12 @@ def BFS(g, personagem,area_obj):
     chance = 0
 
     for item in final:
-        print(str(i) + "º final:")
-        print("Área: " + str(item.personagem.Area))
-        print("Vida: " + str(item.personagem.Vida))
-        print("Locais Visitados: ") 
-        print(item.lista)
-        print("")
+        # print(str(i) + "º final:")
+        # print("Área: " + str(item.personagem.Area))
+        # print("Vida: " + str(item.personagem.Vida))
+        # print("Locais Visitados: ") 
+        # print(item.lista)
+        # print("")
         i+=1
         if item.personagem.Area >= area_obj:
             chance+=1

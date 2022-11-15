@@ -11,10 +11,10 @@
     <body>
         <div class="jogo">
             <h1 class="pontoatual">Você está em {{ localizacao }}</h1>
-            <div class="chance">Possui {{ chance }}% de vencer o jogo</div>
+            <div class="chance"><h1>Possui {{ chance }}% de vencer o jogo</h1></div>
             <div class="mapa">{{mapa | safe}}</div>
-            <div class="dados"><span>❤️: {{vida}}</span><span>🍗: {{suprimentos}}</span><span>Objetivo: {{ area_obj }}</span></div>
-            <div class="barra">Progresso Área Conquistada: <progress id="life-bar" max="{{ area_obj }}" value="{{ area }}"></progress></div>
+            <div class="dados"><span><h3>Status Atuais:</h3></span><span>❤️: {{vida}}</span><span>🍗: {{suprimentos}}</span></div>
+            <div class="barra">Progresso Área Conquistada: <progress id="life-bar" max="{{ area_obj }}" value="{{ area }}"></progress>{{ area }}/{{ area_obj }}</div>
         </div>
     </body>
 </html>

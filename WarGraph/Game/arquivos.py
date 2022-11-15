@@ -9,13 +9,16 @@ def colher_dados():
             reader = csv.DictReader(csvfile)
             for row in reader:
                 g.add_vertice(classes.Vertice(row["Nome"],row["X"],row["Y"],row["Suprimentos"],row["Medicamentos"],row["Forca"],row["Base"],row["Area"]))
+    except:
+        print("\nErro ao Adicionar Vértices\n")
+    
+    try:
         # Adicionando as areastas em seus vértices
-        
         with open("Game\\static\\arestas.csv", 'r') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 g.add_edge(row["V"],row["U"])
-    except:
-        print("\nAlgum arquivo seu deu erro aqui mermão\n")
+    except:        
+        print("\nErro ao Adicionar Arestas\n")
 
     return g

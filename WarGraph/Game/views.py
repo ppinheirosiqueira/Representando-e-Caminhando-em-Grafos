@@ -5,15 +5,30 @@ from django.urls import reverse
 from . import arquivos, classes, game, graph
 
 dificuldade = 2
-inicial = " "
+inicial = "aleatoria"
 g  = arquivos.colher_dados() # Inicia o Grafo
 
 # Create your views here.
 
 def index(request): # Tela Inicial
+    global dificuldade
 
     body = '<h1 class="title">WAR GRAPH</h1>'
     body = body + '<div class="middle">'
+    body = body + '<div class="show">'
+    body = body + 'Dificuldade: ' 
+    if dificuldade == 1:
+        body = body + 'Fácil'
+    elif dificuldade == 2:
+        body = body + 'Normal'
+    else:
+        body = body + 'Difícil'
+    body = body + '<br>Cidade Inicial: '
+    if inicial == " ":
+        body = body + 'Aleatória'
+    else:
+        body = body + inicial
+    body = body + '</div>'
     body = body + '<a href="start" class="btn btn1">Start game</a>'
     body = body + '<a href="cidade" class="btn btn2">City</a>'
     body = body + '<a href="dificuldade" class="btn btn3">Mode</a>'
@@ -50,9 +65,9 @@ def esc_dificuldade(request, escolha):
 
 def cidade(request):
     cidades = g.cidades()
-    print(cidades)
     body = '<h1 class="title">CIDADES</h1>'
     body = body + '<div class="cidade_menu">'
+    body = body + '<a href="cidade/aleatoria" class="btn btn2">Aleatória</a>'
     for cidade in cidades:
         body = body + '<a href="cidade/' + cidade + '" class="btn btn2">' + cidade + '</a>'
     body = body + '</div>'
@@ -71,14 +86,17 @@ def start(request):
     global area_obj
     global p
     
-    if inicial != " ":
-        p = classes.Personagem(inicial, g, dificuldade) # Inicia o Personagem com a cidade escolhida inicialmente
+    if inicial != "aleatoria":
+        p = classes.Personagem(inicial, g) # Inicia o Personagem com a cidade escolhida inicialmente
     else:
-        p = classes.Personagem(g.randomVertice(),g, dificuldade) # Inicia o Personagem com uma cidade randômica
+        p = classes.Personagem(g.randomVertice(),g) # Inicia o Personagem com uma cidade randômica
 
-    p.print_personagem()
+    if len(g.vertices[p.Localizacao].Vizinhos) == 0:
+        return HttpResponseRedirect(reverse('fim',None))
 
-    g.vertices[p.Localizacao].Visitado = True
+    # p.print_personagem()
+
+    graph.zerarNo(g,p.Localizacao)    
     g2 = g.copy()
     if dificuldade == 1:
         area_obj = graph.guloso_facil(g2,p)
@@ -90,24 +108,65 @@ def start(request):
 
 def jogo(request):  
     global area_obj
+
     chance = graph.BFS(g,p,area_obj)
-    
+
     bigX = g.vertices[p.Localizacao].X
     bigY = g.vertices[p.Localizacao].Y
+    smallX = g.vertices[p.Localizacao].X
+    smallY = g.vertices[p.Localizacao].Y
 
     for vizinho in g.vertices[p.Localizacao].Vizinhos:
         if g.vertices[vizinho].X > bigX:
             bigX = g.vertices[vizinho].X
         if g.vertices[vizinho].Y > bigY:
             bigY = g.vertices[vizinho].Y
+        if g.vertices[vizinho].X < smallX:
+            smallX = g.vertices[vizinho].X
+        if g.vertices[vizinho].Y < smallY:
+            smallY = g.vertices[vizinho].Y
 
-    bigX = bigX*1.1
-    bigY = bigY*1.1
+    rangeX = 1.1*(abs(bigX) + abs(smallX))
+    rangeY = 1.1*(abs(bigY) + abs(smallY))
+
+    if g.vertices[p.Localizacao].Base:
+        auxP = "base"
+    else:
+        auxP = "cidade"
 
     mapa = ""
+    # Adicionando onde você está
+    mapa = mapa + '<a style="top:' + str(100*(g.vertices[p.Localizacao].X + abs(smallX))/rangeX) + '%;left:' +  str(100*(g.vertices[p.Localizacao].Y + abs(smallY))/rangeY) + '%;">'
+    mapa = mapa + '<img src="static/' + auxP + '.svg" alt="' + p.Localizacao + '" class="filter-blue icones">'
+    mapa = mapa + '<span class="tooltiptext">' + p.Localizacao + '<br>Estou Aqui</span></a>'
+    
     for vizinho in g.vertices[p.Localizacao].Vizinhos:
-        if(g.vertices[vizinho].Base or not g.vertices[vizinho].Visitado):
-            mapa = mapa + '<a href="escolha/' +  vizinho + '" style="top:' + str(100*g.vertices[vizinho].X/bigX) + '%;left:' + str(100*g.vertices[vizinho].Y/bigY) + '%;">' + '<button type="button" href="escolha/' + vizinho + '">' +  vizinho + '</button></a><br>'
+        if g.vertices[vizinho].Base:
+            auxP = "base"
+            if g.vertices[vizinho].Visitado:
+                auxC = "filter-blue"
+            else:
+                auxC = "filter-green"
+        else:
+            auxP = "cidade"
+            if g.vertices[vizinho].Visitado:
+                auxC = "filter-red"
+            else:
+                auxC = "filter-green"
+
+        if(g.vertices[vizinho].Base or not g.vertices[vizinho].Visitado): # Adicionando pontos que você pode ir
+            mapa = mapa + '<a href="escolha/' +  vizinho + '" style="top:' + str(100*(g.vertices[vizinho].X + abs(smallX))/rangeX)  + '%;left:' +  str(100*(g.vertices[vizinho].Y + abs(smallY))/rangeY) + '%;">'
+            mapa = mapa + '<img src="static/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones">'
+            mapa = mapa + '<span class="tooltiptext">' + vizinho + '<br>'
+            mapa = mapa + '📏: ' + str(game.distancia(p.Localizacao,vizinho,g))
+            mapa = mapa + ' 🗺️: ' + str(g.vertices[vizinho].Area)  + '<br>'
+            mapa = mapa + '⚔️: ' + str(g.vertices[vizinho].Strength)
+            mapa = mapa + ' 🩹: ' + str(g.vertices[vizinho].Medicamentos) + '<br>'
+            mapa = mapa + '🍗: ' + str(g.vertices[vizinho].Suprimentos) + '</span></a>'
+        else: # Adicionando pontos que você não pode ir
+            mapa = mapa + '<a style="top:' + str(100*(g.vertices[vizinho].X + abs(smallX))/rangeX)  + '%;left:' +  str(100*(g.vertices[vizinho].Y + abs(smallY))/rangeY) + '%;">'
+            mapa = mapa + '<img src="static/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones">'
+            mapa = mapa + '<span class="tooltiptext">' + vizinho + '<br>Já visitado</span></a>'
 
     return render(request, "jogo.html", {
         "localizacao": p.Localizacao,
@@ -123,43 +182,42 @@ def escolha(request,nome):
     global area_obj
     # Já tendo a posição do jogador e o nome do Vértice que ele quer ir, é possível andar
 
-    distancia = game.distancia(p.Localizacao,nome,g)
+    distancia = game.distancia(p.Localizacao,nome,g) # Calcula a distância
 
     p.gastar_sup(distancia) # Personagem anda até lá
 
     if not g.vertices[nome].Visitado:
-        game.combate(distancia,p,g.vertices[nome])
+        p.apos_luta(g.vertices[nome].Strength) # Caso nunca tenha ido, tem que batalhar para tomar o ponto
+        #game.combate(distancia,p,g.vertices[nome]) # Caso queira um combate com chance de ocorrer
 
-    if p.Vida < 0 :
-        return HttpResponseRedirect(reverse('fim',None))
+    if p.Vida <= 0 :
+        return HttpResponseRedirect(reverse('fim',None)) # Se morreu andando ou batalhando, o jogo acaba
 
     if not g.vertices[nome].Visitado:
-        p.conquistando(g.vertices[nome].Area,g.vertices[nome].Medicamentos,g.vertices[nome].Suprimentos)
+        p.conquistando(g.vertices[nome].Area,g.vertices[nome].Medicamentos,g.vertices[nome].Suprimentos) # Se nunca visitou, conquistar os suprimentos do local
 
-    g.vertices[nome].Visitado = True
+    g.vertices[nome].Visitado = True # Mudar para True o visitado
 
-    p.att_local(nome)
+    p.att_local(nome) # Atualizar o Local
 
-    if p.Area >= area_obj:
+    if p.Area >= area_obj: # Se a área for igual ou maior, vitória
         return HttpResponseRedirect(reverse('fim',None))
 
     return HttpResponseRedirect(reverse('jogo',None))
 
 def fim(request):
+    global area_obj
     # Tela auxiliar de fim do jogo
     return render(request, "fim.html", {
         "vida": p.Vida,
         "area": p.Area,
-        "suprimentos": p.Suprimentos,
+        "area_obj": area_obj,
+        "vizinhos": len(g.vertices[p.Localizacao].Vizinhos),
     })
 
 def reset(request):
-    global inicial
     global p
-    global dificuldade
     g.reset() # Reinicia o Grafo
-    inicial = " " # Coloca a cidade inicial como randomica novamente
-    dificuldade = 2 # Reseta a dificuldade para normal
     del p # Apaga o Personagem
 
     return HttpResponseRedirect(reverse('index',None))
