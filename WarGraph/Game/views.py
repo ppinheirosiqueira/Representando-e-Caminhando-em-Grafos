@@ -132,7 +132,7 @@ def jogo(request):
 
     mapa = ""
     # Adicionando onde você está
-    mapa = mapa + '<a style="top:' + str(100*(g.vertices[p.Localizacao].Y + abs(smallY))/rangeY) + '%;left:' +  str(100*(g.vertices[p.Localizacao].X + abs(smallX))/rangeX) + '%;">'
+    mapa = mapa + '<a style="bottom:' + str(100*(g.vertices[p.Localizacao].Y + abs(smallY))/rangeY) + '%;left:' +  str(100*(g.vertices[p.Localizacao].X + abs(smallX))/rangeX) + '%;">'
     mapa = mapa + '<img src="static/imagens/cidade.svg" alt="' + p.Localizacao + '" class="filter-blue icones">'
     mapa = mapa + '<span class="tooltiptext">' + p.Localizacao + '<br>Estou Aqui</span></a>'
     
@@ -143,7 +143,7 @@ def jogo(request):
             auxC = "filter-green"
 
         if not g.vertices[vizinho].Visitado: # Adicionando pontos que você pode ir
-            mapa = mapa + '<a href="escolha/' +  vizinho + '" style="top:' + str(100*(g.vertices[vizinho].Y + abs(smallY))/rangeY) + '%;left:' +  str(100*(g.vertices[vizinho].X + abs(smallX))/rangeX) + '%;">'
+            mapa = mapa + '<a href="escolha/' +  vizinho + '" style="bottom:' + str(100*(g.vertices[vizinho].Y + abs(smallY))/rangeY) + '%;left:' +  str(100*(g.vertices[vizinho].X + abs(smallX))/rangeX) + '%;">'
             mapa = mapa + '<img src="static/imagens/cidade.svg" alt="' + vizinho + '" class="' + auxC + ' icones">'
             mapa = mapa + '<span class="tooltiptext">' + vizinho + '<br>'
             mapa = mapa + '📏: ' + str(game.distancia(p.Localizacao,vizinho,g))
@@ -153,7 +153,7 @@ def jogo(request):
             mapa = mapa + '🍗: ' + str(g.vertices[vizinho].Suprimentos) + '</span></a>'
             p.Opcoes += 1
         else: # Adicionando pontos que você não pode ir
-            mapa = mapa + '<a style="top:' + str(100*(g.vertices[vizinho].Y + abs(smallY))/rangeY) + '%;left:' + str(100*(g.vertices[vizinho].X + abs(smallX))/rangeX) + '%;">'
+            mapa = mapa + '<a style="bottom:' + str(100*(g.vertices[vizinho].Y + abs(smallY))/rangeY) + '%;left:' + str(100*(g.vertices[vizinho].X + abs(smallX))/rangeX) + '%;">'
             mapa = mapa + '<img src="static/imagens/cidade.svg" alt="' + vizinho + '" class="' + auxC + ' icones">'
             mapa = mapa + '<span class="tooltiptext">' + vizinho + '<br>Já visitado</span></a>'
 

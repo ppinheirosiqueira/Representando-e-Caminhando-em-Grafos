@@ -12,7 +12,7 @@
         <div class="jogo">
             <h1 class="pontoatual">Você está em {{ localizacao }}</h1>
             <div class="chance"><h1>Possui {{ chance }}% de vencer o jogo</h1></div>
-            <div class="mapa">{{mapa | safe}}</div>
+            <div class="mapa"><div class="auxMapa">{{mapa | safe}}</div></div>
             <div class="dados"><span><h3>Status Atuais:</h3></span><span>❤️: {{vida}}</span><span>🍗: {{suprimentos}}</span></div>
             <div class="barra">Progresso Área Conquistada: 
                 <div class="progress-bar">

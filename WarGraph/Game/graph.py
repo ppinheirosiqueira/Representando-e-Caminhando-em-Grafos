@@ -4,8 +4,6 @@ from . import classes, game
 def guloso_facil(g,personagem):
     pAux = personagem.copy(g)
     nomeVizinho = "a"
-    rota = []
-    rota.append(pAux.Localizacao)
 
     while pAux.Vida > 0 and nomeVizinho != "":
         # print("Localização Atual: " + pAux.Localizacao)
@@ -17,9 +15,8 @@ def guloso_facil(g,personagem):
                 nomeVizinho = g.vertices[vizinho].name
         if nomeVizinho != "":
             apos_escolha(pAux,nomeVizinho,g)
-            rota.append(pAux.Localizacao)
 
-    return pAux.Area, rota
+    return pAux.Area, pAux.Caminho
 
 def funcao_medio(area,medicamento,vida,exercito):
     if vida > exercito:
@@ -28,10 +25,7 @@ def funcao_medio(area,medicamento,vida,exercito):
 
 def guloso_medio(g,personagem):
     pAux = personagem.copy(g)
-    pAux.print_personagem()
     nomeVizinho = "a"
-    rota = []
-    rota.append(pAux.Localizacao)
 
     while pAux.Vida > 0 and nomeVizinho != "":
         # print("Localização Atual: " + pAux.Localizacao)
@@ -46,9 +40,8 @@ def guloso_medio(g,personagem):
                 nomeVizinho = g.vertices[vizinho].name
         if nomeVizinho != "":
             apos_escolha(pAux,nomeVizinho,g)
-            rota.append(pAux.Localizacao)
 
-    return pAux.Area, rota
+    return pAux.Area, pAux.Caminho
 
 def funcao_dificil(area,medicamento,suprimento,vida,distancia,exercito):
     if vida > exercito:
@@ -57,10 +50,7 @@ def funcao_dificil(area,medicamento,suprimento,vida,distancia,exercito):
 
 def guloso_dificil(g, personagem):
     pAux = personagem.copy(g)
-    pAux.print_personagem()
     nomeVizinho = "a"
-    rota = []
-    rota.append(pAux.Localizacao)
     
     while pAux.Vida > 0 and nomeVizinho != "":
         # print("Localização Atual: " + pAux.Localizacao)
@@ -75,10 +65,8 @@ def guloso_dificil(g, personagem):
                 nomeVizinho = g.vertices[vizinho].name
         if nomeVizinho != "":
             apos_escolha(pAux,nomeVizinho,g)
-            rota.append(pAux.Localizacao)
 
-
-    return pAux.Area, rota
+    return pAux.Area, pAux.Caminho
 
 def apos_escolha(personagem,nome,g):
     distancia = game.distancia(personagem.Localizacao,nome,g) # Calcula a distância até o vizinho escolhido
