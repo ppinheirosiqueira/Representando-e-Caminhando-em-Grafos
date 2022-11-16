@@ -1,0 +1,38 @@
+.fim{
+    text-align: justify;
+    align-items: center;
+}
+
+.ruim{
+    color:red;
+}
+
+.bom{
+    color: green;
+}
+
+.reset{
+    width: 20%;
+    margin: auto!important;
+}
+
+.texto{
+    font-family: 'Courier New', Courier, monospace;
+    padding: 20px;
+    font-size: 20px;
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
+
+.texto .rotas{
+    margin: auto;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.texto .rotas .lista{
+    display: grid;
+    grid-template-columns: auto;
+    margin: auto;
+}

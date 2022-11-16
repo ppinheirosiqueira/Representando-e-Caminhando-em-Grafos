@@ -1,0 +1,111 @@
+
+/* JOGO PAGE */
+
+.jogo{
+    display: grid;
+    grid-template-areas:
+      'header chance'
+      'mapa mapa'
+      'dados barra';
+    padding: 5%;
+    width: 85%;
+    height: 85%;
+    grid-template-rows: 10% 80% 10%;
+    grid-template-columns: 50% 50%;
+    row-gap: 5%;
+}
+
+.jogo .mapa{
+    grid-area: mapa;
+    position: relative;
+    border: 2px solid #000000;
+    border-radius: 30px;
+    padding: 30px;
+    width: auto;
+    height: auto;
+    background-color: #000000;
+}
+
+.jogo .mapa a{
+    position: absolute;
+    padding: inherit;
+}
+
+.jogo .mapa a .icones{
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+/* https://codepen.io/sosuke/pen/Pjoqqp */
+
+.filter-blue{
+    filter: invert(92%) sepia(3%) saturate(3582%) hue-rotate(163deg) brightness(89%) contrast(103%);
+}
+
+.filter-green{
+    filter: invert(78%) sepia(36%) saturate(463%) hue-rotate(69deg) brightness(101%) contrast(94%);
+}
+
+.filter-red{
+    filter: invert(20%) sepia(86%) saturate(7312%) hue-rotate(0deg) brightness(94%) contrast(118%);
+}
+
+.jogo .mapa a .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+  
+.jogo .mapa a:hover .tooltiptext {
+    visibility: visible;
+}
+
+.jogo .chance{
+    grid-area: chance;
+}
+
+.jogo .pontoatual{
+    margin-left: 20px;
+    grid-area: header;
+}
+
+.jogo .barra{
+    grid-area: barra;
+}
+
+.jogo .barra .progress-bar{
+    color: #000!important;
+    background-color: gray!important;
+    text-align: center;
+    width: 80%;
+}
+
+.jogo .barra .verde{
+    background-color: #4CAF50!important;
+    padding: 0.01em 16px;
+    color: #fff!important;
+}
+
+.jogo .barra .vermelho{
+    background-color: #f44336!important;
+    padding: 0.01em 16px;
+}
+
+.jogo .dados{
+    grid-area: dados;
+    display: grid;
+    grid-template-columns: auto;
+    padding-inline: 10%;
+}

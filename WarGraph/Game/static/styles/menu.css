@@ -1,0 +1,28 @@
+
+/* MENU PAGE */
+
+.middle {
+    position: absolute;
+    margin-top: 10%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.middle .show{
+    border: 2px dotted #000000;
+    color: black;
+    font-size: 14px;
+    text-transform: uppercase;
+    padding: 20px 30px;
+    line-height: 150%;
+}
+
+/* CIDADE MENU PAGE */
+
+.cidade_menu{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}

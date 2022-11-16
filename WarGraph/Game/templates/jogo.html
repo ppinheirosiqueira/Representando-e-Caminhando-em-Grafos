@@ -5,8 +5,8 @@
 <html lang="en">
     <head>
         <title>War Graph</title>
-        <link href="{% static 'style.css' %}" rel="stylesheet">
-        <script src="{% static 'script.js' %}" defer></script>
+        <link href="{% static 'styles/style.css' %}" rel="stylesheet">
+        <link href="{% static 'styles/jogo.css' %}" rel="stylesheet">
     </head>
     <body>
         <div class="jogo">
@@ -14,7 +14,10 @@
             <div class="chance"><h1>Possui {{ chance }}% de vencer o jogo</h1></div>
             <div class="mapa">{{mapa | safe}}</div>
             <div class="dados"><span><h3>Status Atuais:</h3></span><span>❤️: {{vida}}</span><span>🍗: {{suprimentos}}</span></div>
-            <div class="barra">Progresso Área Conquistada: <progress id="life-bar" max="{{ area_obj }}" value="{{ area }}"></progress>{{ area }}/{{ area_obj }}</div>
+            <div class="barra">Progresso Área Conquistada: 
+                <div class="progress-bar">
+                    <div class="{{cor}}" style="width:{{porcentagem}}%;">{{ area }}/{{ area_obj }}</div>
+                </div>
         </div>
     </body>
 </html>
