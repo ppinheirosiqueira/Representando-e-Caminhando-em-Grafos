@@ -1,0 +1,10 @@
+.texto {
+    margin-inline: 10%;
+    text-align: justify;
+    font-size: 20px;
+    line-height: 105%;    
+}
+
+.texto p::first-letter{
+    font-size: 30px;
+}

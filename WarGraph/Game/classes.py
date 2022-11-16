@@ -6,14 +6,13 @@ from . import arquivos
 # Assim, é melhor utilizar uma lista de adjacentes
 
 class Vertice:
-    def __init__(self,nome,x,y,sup,med,forca,base,area):
+    def __init__(self,nome,x,y,sup,med,forca,area):
         self.name = nome
         self.X = int(x)
         self.Y = int(y)
         self.Suprimentos = int(sup)
         self.Medicamentos = int(med)
         self.Strength = int(forca)
-        self.Base = bool(int(base))
         self.Area = int(area)
         self.Visitado = False
         self.Vizinhos = list()
@@ -55,7 +54,7 @@ class Graph:
     
     def print_graph(self):
         for key in sorted(list(self.vertices.keys())):
-            print("Cidade: " + key + ", visitado: " + str(self.vertices[key].Visitado) + ", base: " + str(self.vertices[key].Base))
+            print("Cidade: " + key + ", visitado: " + str(self.vertices[key].Visitado))
             print("Vizinhos: ")
             print(self.vertices[key].Vizinhos)
 
@@ -85,10 +84,14 @@ class Personagem:
         self.Suprimentos = 100  + g.vertices[key].Suprimentos
         self.Vida = 100 + g.vertices[key].Medicamentos
         self.Area = 0 + g.vertices[key].Area
+        self.Opcoes = 0
+        self.Caminho = []
+        self.Caminho.append(self.Localizacao)
     
     def att_local(self, key):
         self.Localizacao = key
-    
+        self.Caminho.append(self.Localizacao)
+
     def gastar_sup(self,distancia):
         if distancia > self.Suprimentos:
             distancia = distancia - self.Suprimentos
@@ -120,6 +123,7 @@ class Personagem:
         p.Vida = self.Vida
         p.Suprimentos = self.Suprimentos
         p.Localizacao = self.Localizacao
+        p.Caminho = copy.deepcopy(self.Caminho)
 
         return p
 
