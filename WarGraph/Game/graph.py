@@ -87,6 +87,7 @@ def zerarNo(g,nome):
     g.vertices[nome].Suprimentos = 0
     g.vertices[nome].Mediamentos = 0
 
+# Nem uso mais
 def BFS(g, personagem,area_obj):
     andando = [] # Vetor que conterá todas as opções de andado e que continuará andando
     final = [] # Sempre que o personagem morrer, será levado para este vetor
