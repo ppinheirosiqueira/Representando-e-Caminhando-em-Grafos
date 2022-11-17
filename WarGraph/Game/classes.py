@@ -6,7 +6,7 @@ from . import arquivos
 # Assim, é melhor utilizar uma lista de adjacentes
 
 class Vertice:
-    def __init__(self,nome,x,y,sup,med,forca,area):
+    def __init__(self,nome,x,y,sup,med,forca,base,area):
         self.name = nome
         self.X = int(x)
         self.Y = int(y)
@@ -14,6 +14,7 @@ class Vertice:
         self.Medicamentos = int(med)
         self.Strength = int(forca)
         self.Area = int(area)
+        self.Base = bool(int(base))
         self.Visitado = False
         self.Vizinhos = list()
     

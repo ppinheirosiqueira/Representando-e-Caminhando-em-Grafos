@@ -8,7 +8,7 @@ def colher_dados():
         with open("Game\\static\\arquivos\\vertices.csv", 'r') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                g.add_vertice(classes.Vertice(row["Nome"],row["X"],row["Y"],row["Suprimentos"],row["Medicamentos"],row["Forca"],row["Area"]))
+                g.add_vertice(classes.Vertice(row["Nome"],row["X"],row["Y"],row["Suprimentos"],row["Medicamentos"],row["Forca"],row["Base"],row["Area"]))
     except:
         print("\nErro ao Adicionar Vértices\n")
     

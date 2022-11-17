@@ -10,7 +10,7 @@ def guloso_facil(g,personagem):
         nomeVizinho = ""
         areaVizinho = -10
         for vizinho in g.vertices[pAux.Localizacao].Vizinhos:
-            if g.vertices[vizinho].Area > areaVizinho and not g.vertices[vizinho].Visitado:
+            if g.vertices[vizinho].Area > areaVizinho and (not g.vertices[vizinho].Visitado or g.vertices[vizinho].Base):
                 areaVizinho = g.vertices[vizinho].Area
                 nomeVizinho = g.vertices[vizinho].name
         if nomeVizinho != "":
@@ -35,7 +35,7 @@ def guloso_medio(g,personagem):
 
         for vizinho in g.vertices[pAux.Localizacao].Vizinhos:
             auxGuloso = funcao_medio(g.vertices[vizinho].Area,g.vertices[vizinho].Medicamentos,pAux.Vida,g.vertices[vizinho].Strength)
-            if auxGuloso > GulosoVizinho and not g.vertices[vizinho].Visitado:
+            if auxGuloso > GulosoVizinho and (not g.vertices[vizinho].Visitado or g.vertices[vizinho].Base):
                 GulosoVizinho = auxGuloso
                 nomeVizinho = g.vertices[vizinho].name
         if nomeVizinho != "":
@@ -60,7 +60,7 @@ def guloso_dificil(g, personagem):
 
         for vizinho in g.vertices[pAux.Localizacao].Vizinhos:
             auxGuloso = funcao_dificil(g.vertices[vizinho].Area,g.vertices[vizinho].Medicamentos,g.vertices[vizinho].Suprimentos,pAux.Vida,game.distancia(pAux.Localizacao,vizinho,g),g.vertices[vizinho].Strength)
-            if auxGuloso > GulosoVizinho and not g.vertices[vizinho].Visitado:
+            if auxGuloso > GulosoVizinho and (not g.vertices[vizinho].Visitado or g.vertices[vizinho].Base):
                 GulosoVizinho = auxGuloso
                 nomeVizinho = g.vertices[vizinho].name
         if nomeVizinho != "":

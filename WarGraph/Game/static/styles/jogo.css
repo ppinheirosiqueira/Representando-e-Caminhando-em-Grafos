@@ -4,9 +4,9 @@
 .jogo{
     display: grid;
     grid-template-areas:
-      'header chance'
+      'header dados'
       'mapa mapa'
-      'dados barra';
+      'barra desistir';
     padding: 5%;
     width: 85%;
     height: 85%;
@@ -33,12 +33,16 @@
 .jogo .mapa a{
     position: absolute;
     padding: inherit;
-    width: 15px;
-    height: 15px;
+    width: auto;
+    color: white;
+    text-align: center;
+    text-decoration: none;
 }
 
 .jogo .mapa a .icones{
     cursor: pointer;
+    width: 15px;
+    height: 15px;
 }
 
 /* https://codepen.io/sosuke/pen/Pjoqqp */
@@ -47,12 +51,16 @@
     filter: invert(92%) sepia(3%) saturate(3582%) hue-rotate(163deg) brightness(89%) contrast(103%);
 }
 
+.filter-white{
+    filter: invert(100%) sepia(0%) saturate(4391%) hue-rotate(337deg) brightness(114%) contrast(97%);
+}
+
 .filter-green{
     filter: invert(78%) sepia(36%) saturate(463%) hue-rotate(69deg) brightness(101%) contrast(94%);
 }
 
 .filter-red{
-    filter: invert(20%) sepia(86%) saturate(7312%) hue-rotate(0deg) brightness(94%) contrast(118%);
+    filter: invert(69%) sepia(38%) saturate(2490%) hue-rotate(310deg) brightness(105%) contrast(88%);
 }
 
 .jogo .mapa a .tooltiptext {
@@ -76,10 +84,6 @@
     visibility: visible;
 }
 
-.jogo .chance{
-    grid-area: chance;
-}
-
 .jogo .pontoatual{
     margin-left: 20px;
     grid-area: header;
@@ -87,6 +91,7 @@
 
 .jogo .barra{
     grid-area: barra;
+    font-size: 20px;
 }
 
 .jogo .barra .progress-bar{
@@ -102,6 +107,12 @@
     color: #fff!important;
 }
 
+.jogo .barra .marrom{
+    background-color: #A07943!important;
+    padding: 0.01em 16px;
+    color: #fff!important;
+}
+
 .jogo .barra .vermelho{
     background-color: #f44336!important;
     padding: 0.01em 16px;
@@ -112,8 +123,13 @@
     display: grid;
     grid-template-columns: auto;
     padding-inline: 10%;
+    font-size: 20px;
 }
 
 .jogo .dados h3{
     margin: 0% 0% 2% 0%;
+}
+
+.jogo .desistir{
+    grid-area: desistir;
 }

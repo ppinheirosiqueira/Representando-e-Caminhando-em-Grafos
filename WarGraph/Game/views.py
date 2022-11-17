@@ -110,8 +110,6 @@ def start(request):
 def jogo(request):  
     global area_obj
 
-    chance =  40 #graph.BFS(g,p,area_obj)
-
     bigX = g.vertices[p.Localizacao].X
     bigY = g.vertices[p.Localizacao].Y
     smallX = g.vertices[p.Localizacao].X
@@ -130,22 +128,35 @@ def jogo(request):
     rangeX = 1.1*(abs(bigX) + abs(smallX))
     rangeY = 1.1*(abs(bigY) + abs(smallY))
 
+    if g.vertices[p.Localizacao].Base:
+        auxP = "base"
+    else:
+        auxP = "cidade"
+
     mapa = ""
     # Adicionando onde você está
     mapa = mapa + '<a style="bottom:' + str(100*(g.vertices[p.Localizacao].Y + abs(smallY))/rangeY) + '%;left:' +  str(100*(g.vertices[p.Localizacao].X + abs(smallX))/rangeX) + '%;">'
-    mapa = mapa + '<img src="static/imagens/cidade.svg" alt="' + p.Localizacao + '" class="filter-blue icones">'
-    mapa = mapa + '<span class="tooltiptext">' + p.Localizacao + '<br>Estou Aqui</span></a>'
+    mapa = mapa + '<img src="static/imagens/' + auxP + '.svg" alt="' + p.Localizacao + '" class="filter-white icones"><br>' + p.Localizacao
+    mapa = mapa + '<span class="tooltiptext">Estou Aqui</span></a>'
     
     for vizinho in g.vertices[p.Localizacao].Vizinhos:
-        if g.vertices[vizinho].Visitado:
-            auxC = "filter-red"
+        if g.vertices[vizinho].Base:
+            auxP = "base"
+            if g.vertices[vizinho].Visitado:
+                auxC = "filter-blue"
+            else:
+                auxC = "filter-green"
         else:
-            auxC = "filter-green"
+            auxP = "cidade"
+            if g.vertices[vizinho].Visitado:
+                auxC = "filter-red"
+            else:
+                auxC = "filter-green"
 
-        if not g.vertices[vizinho].Visitado: # Adicionando pontos que você pode ir
+        if not g.vertices[vizinho].Visitado or g.vertices[vizinho].Base: # Adicionando pontos que você pode ir
             mapa = mapa + '<a href="escolha/' +  vizinho + '" style="bottom:' + str(100*(g.vertices[vizinho].Y + abs(smallY))/rangeY) + '%;left:' +  str(100*(g.vertices[vizinho].X + abs(smallX))/rangeX) + '%;">'
-            mapa = mapa + '<img src="static/imagens/cidade.svg" alt="' + vizinho + '" class="' + auxC + ' icones">'
-            mapa = mapa + '<span class="tooltiptext">' + vizinho + '<br>'
+            mapa = mapa + '<img src="static/imagens/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones"><br>' + vizinho
+            mapa = mapa + '<span class="tooltiptext">'
             mapa = mapa + '📏: ' + str(game.distancia(p.Localizacao,vizinho,g))
             mapa = mapa + ' 🗺️: ' + str(g.vertices[vizinho].Area)  + '<br>'
             mapa = mapa + '⚔️: ' + str(g.vertices[vizinho].Strength)
@@ -154,8 +165,8 @@ def jogo(request):
             p.Opcoes += 1
         else: # Adicionando pontos que você não pode ir
             mapa = mapa + '<a style="bottom:' + str(100*(g.vertices[vizinho].Y + abs(smallY))/rangeY) + '%;left:' + str(100*(g.vertices[vizinho].X + abs(smallX))/rangeX) + '%;">'
-            mapa = mapa + '<img src="static/imagens/cidade.svg" alt="' + vizinho + '" class="' + auxC + ' icones">'
-            mapa = mapa + '<span class="tooltiptext">' + vizinho + '<br>Já visitado</span></a>'
+            mapa = mapa + '<img src="static/imagens/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones"><br>' + vizinho
+            mapa = mapa + '<span class="tooltiptext">Já visitado</span></a>'
 
     if p.Opcoes == 0:
         return HttpResponseRedirect(reverse('fim',None))
@@ -164,8 +175,10 @@ def jogo(request):
 
     porcentagem = round(100*p.Area/area_obj,2)
 
-    if porcentagem < 50:
+    if porcentagem < 40:
         cor = "vermelho"
+    elif porcentagem < 80:
+        cor = "marrom"
     else:
         cor = "verde"
 
@@ -176,7 +189,6 @@ def jogo(request):
         "suprimentos": p.Suprimentos,
         "mapa": mapa,
         "area_obj": area_obj,
-        "chance": round(chance,2),
         "porcentagem": porcentagem,
         "cor": cor,
     })
