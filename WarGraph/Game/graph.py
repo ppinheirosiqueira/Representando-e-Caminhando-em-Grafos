@@ -18,9 +18,9 @@ def guloso_facil(g,personagem):
 
     return pAux.Area, pAux.Caminho
 
-def funcao_medio(area,medicamento,vida,exercito):
+def funcao_medio(area,vida,exercito):
     if vida > exercito:
-        return area + medicamento
+        return area
     return -1
 
 def guloso_medio(g,personagem):
@@ -31,10 +31,10 @@ def guloso_medio(g,personagem):
         # print("Localização Atual: " + pAux.Localizacao)
         # print("Vida Atual: " + str(pAux.Vida))
         nomeVizinho = ""
-        GulosoVizinho = funcao_medio(0,0,0,1)
+        GulosoVizinho = funcao_medio(0,0,1)
 
         for vizinho in g.vertices[pAux.Localizacao].Vizinhos:
-            auxGuloso = funcao_medio(g.vertices[vizinho].Area,g.vertices[vizinho].Medicamentos,pAux.Vida,g.vertices[vizinho].Strength)
+            auxGuloso = funcao_medio(g.vertices[vizinho].Area,pAux.Vida,g.vertices[vizinho].Strength)
             if auxGuloso > GulosoVizinho and (not g.vertices[vizinho].Visitado or g.vertices[vizinho].Base):
                 GulosoVizinho = auxGuloso
                 nomeVizinho = g.vertices[vizinho].name
