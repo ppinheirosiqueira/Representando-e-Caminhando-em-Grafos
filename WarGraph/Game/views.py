@@ -4,27 +4,26 @@ from django.urls import reverse
 
 from . import arquivos, classes, game, graph
 
-dificuldade = 2
+mode = 2
 inicial = "aleatoria"
 g  = arquivos.colher_dados() # Inicia o Grafo
 
 # Create your views here.
 
 def index(request): # Tela Inicial
-    global dificuldade
-
+    global mode
     body = '<div class="title"><h1>WAR GRAPH</h1></div>'
     body = body + '<div class="middle">'
     body = body + '<div class="show">'
     body = body + 'Dificuldade: ' 
-    if dificuldade == 1:
+    if mode == 1:
         body = body + 'Fácil'
-    elif dificuldade == 2:
+    elif mode == 2:
         body = body + 'Normal'
     else:
         body = body + 'Difícil'
     body = body + '<br>Cidade Inicial: '
-    if inicial == " ":
+    if inicial == "aleatoria":
         body = body + 'Aleatória'
     else:
         body = body + inicial
@@ -54,13 +53,13 @@ def dificuldade(request):
     })
 
 def esc_dificuldade(request, escolha):
-    global dificuldade
+    global mode
     if escolha == "facil":
-        dificuldade = 1
+        mode = 1
     elif escolha == "media":
-        dificuldade = 2
+        mode = 2
     else:
-        dificuldade = 3
+        mode = 3
     return HttpResponseRedirect(reverse('index',None))
 
 def cidade(request):
@@ -87,6 +86,8 @@ def start(request):
     global p
     global rota
 
+    #graph.testarDificuldades(g)
+
     if inicial != "aleatoria":
         p = classes.Personagem(inicial, g) # Inicia o Personagem com a cidade escolhida inicialmente
     else:
@@ -105,6 +106,7 @@ def start(request):
         area_obj, rota = graph.guloso_medio(g2,p)
     else:
         area_obj, rota = graph.guloso_dificil(g2,p)
+
     return HttpResponseRedirect(reverse('jogo',None))
 
 def jogo(request):  
@@ -125,8 +127,8 @@ def jogo(request):
         if g.vertices[vizinho].Y < smallY:
             smallY = g.vertices[vizinho].Y
 
-    rangeX = 1.1*(abs(bigX) + abs(smallX))
-    rangeY = 1.1*(abs(bigY) + abs(smallY))
+    rangeX = 10 +  abs(bigX-smallX)
+    rangeY = 10 + abs(bigY-smallY)
 
     if g.vertices[p.Localizacao].Base:
         auxP = "base"
@@ -135,7 +137,7 @@ def jogo(request):
 
     mapa = ""
     # Adicionando onde você está
-    mapa = mapa + '<a style="bottom:' + str(100*(g.vertices[p.Localizacao].Y + abs(smallY))/rangeY) + '%;left:' +  str(100*(g.vertices[p.Localizacao].X + abs(smallX))/rangeX) + '%;">'
+    mapa = mapa + '<a style="bottom:' + str(100*(abs(5 + g.vertices[p.Localizacao].Y - smallY))/rangeY) + '%;left:' +  str(100*(abs(5 + g.vertices[p.Localizacao].X - smallX))/rangeX) + '%;">'
     mapa = mapa + '<img src="static/imagens/' + auxP + '.svg" alt="' + p.Localizacao + '" class="filter-white icones"><br>' + p.Localizacao
     mapa = mapa + '<span class="tooltiptext">Estou Aqui</span></a>'
     
@@ -154,7 +156,7 @@ def jogo(request):
                 auxC = "filter-green"
 
         if not g.vertices[vizinho].Visitado or g.vertices[vizinho].Base: # Adicionando pontos que você pode ir
-            mapa = mapa + '<a href="escolha/' +  vizinho + '" style="bottom:' + str(100*(g.vertices[vizinho].Y + abs(smallY))/rangeY) + '%;left:' +  str(100*(g.vertices[vizinho].X + abs(smallX))/rangeX) + '%;">'
+            mapa = mapa + '<a href="escolha/' +  vizinho + '" style="bottom:' +  str(100*(5 + abs(g.vertices[vizinho].Y - smallY))/rangeY) + '%;left:' +  str(100*(abs(5 + g.vertices[vizinho].X - smallX))/rangeX) + '%;">'
             mapa = mapa + '<img src="static/imagens/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones"><br>' + vizinho
             mapa = mapa + '<span class="tooltiptext">'
             mapa = mapa + '📏: ' + str(game.distancia(p.Localizacao,vizinho,g))
@@ -164,7 +166,7 @@ def jogo(request):
             mapa = mapa + '🍗: ' + str(g.vertices[vizinho].Suprimentos) + '</span></a>'
             p.Opcoes += 1
         else: # Adicionando pontos que você não pode ir
-            mapa = mapa + '<a style="bottom:' + str(100*(g.vertices[vizinho].Y + abs(smallY))/rangeY) + '%;left:' + str(100*(g.vertices[vizinho].X + abs(smallX))/rangeX) + '%;">'
+            mapa = mapa + '<a style="bottom:' + str(100*(abs(g.vertices[vizinho].Y - smallY))/rangeY) + '%;left:' + str(100*(abs(g.vertices[vizinho].X - smallX))/rangeX) + '%;">'
             mapa = mapa + '<img src="static/imagens/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones"><br>' + vizinho
             mapa = mapa + '<span class="tooltiptext">Já visitado</span></a>'
 
@@ -210,6 +212,8 @@ def escolha(request,nome):
 
     if not g.vertices[nome].Visitado:
         p.conquistando(g.vertices[nome].Area,g.vertices[nome].Medicamentos,g.vertices[nome].Suprimentos) # Se nunca visitou, conquistar os suprimentos do local
+
+    graph.zerarNo(g,nome)
 
     g.vertices[nome].Visitado = True # Mudar para True o visitado
 

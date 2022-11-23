@@ -43,30 +43,47 @@ def guloso_medio(g,personagem):
 
     return pAux.Area, pAux.Caminho
 
-def funcao_dificil(area,medicamento,suprimento,vida,distancia,exercito):
-    if vida > exercito:
-        return area + medicamento + suprimento - distancia
-    return -1
+def troca(rota,i,j):
+    localAux = rota[i]
+    rota[i] = rota[j]
+    rota[j] = localAux
+
+def testarRota(g,rota,personagem):
+    rotaAux = []
+    rotaAux.append(rota[0])
+    for i in range(1,len(rota)):
+        if rota[i] in g.vertices[personagem.Localizacao].Vizinhos:
+            apos_escolha(personagem,rota[i],g)
+            if personagem.Vida <= 0:
+                return personagem.Area, rotaAux
+            rotaAux.append(rota[i])
+    return personagem.Area, rotaAux
 
 def guloso_dificil(g, personagem):
+    g2 = g.copy()
     pAux = personagem.copy(g)
-    nomeVizinho = "a"
-    
-    while pAux.Vida > 0 and nomeVizinho != "":
-        # print("Localização Atual: " + pAux.Localizacao)
-        # print("Vida Atual: " + str(pAux.Vida))
-        nomeVizinho = ""
-        GulosoVizinho = funcao_dificil(0,0,0,0,0,1)
 
-        for vizinho in g.vertices[pAux.Localizacao].Vizinhos:
-            auxGuloso = funcao_dificil(g.vertices[vizinho].Area,g.vertices[vizinho].Medicamentos,g.vertices[vizinho].Suprimentos,pAux.Vida,game.distancia(pAux.Localizacao,vizinho,g),g.vertices[vizinho].Strength)
-            if auxGuloso > GulosoVizinho and (not g.vertices[vizinho].Visitado or g.vertices[vizinho].Base):
-                GulosoVizinho = auxGuloso
-                nomeVizinho = g.vertices[vizinho].name
-        if nomeVizinho != "":
-            apos_escolha(pAux,nomeVizinho,g)
+    area_obj, rota = guloso_medio(g2,pAux)
 
-    return pAux.Area, pAux.Caminho
+    rotaAux = copy.deepcopy(rota)
+
+    for item in list(g.vertices.keys()):
+        if item not in rota:
+            rotaAux.append(item)
+
+    for i in range(1,len(rotaAux)-1): # Não posso trocar o primeiro elemento, é dele que o jogador começa
+        for j in range(2,len(rotaAux)):
+            g2 = g.copy()
+            pAux = personagem.copy(g)
+            troca(rotaAux,i,j) # Realizo uma troca na rota
+            areaAux,rota2 = testarRota(g2,rotaAux,pAux) # Testo a nova rota
+            if areaAux > area_obj: # Se a área nova é melhor que a atual, troco a rota nova
+                rota = copy.deepcopy(rota2)
+                area_obj = areaAux
+            else:
+                troca(rotaAux,i,j) # Se a troca não melhorou, retorno para o que era
+
+    return area_obj, rota
 
 def apos_escolha(personagem,nome,g):
     distancia = game.distancia(personagem.Localizacao,nome,g) # Calcula a distância até o vizinho escolhido
@@ -85,7 +102,7 @@ def zerarNo(g,nome):
     g.vertices[nome].Area = 0
     g.vertices[nome].Strength = 0
     g.vertices[nome].Suprimentos = 0
-    g.vertices[nome].Mediamentos = 0
+    g.vertices[nome].Medicamentos = 0
 
 # Nem uso mais
 def BFS(g, personagem,area_obj):
@@ -153,3 +170,46 @@ def BFS(g, personagem,area_obj):
             chance+=1
     
     return 100*chance/len(final)
+
+def testarDificuldades(g):
+    aux = []
+    for item in list(g.vertices.keys()):
+        aux.append(item)
+    
+    r1 = [0,0]
+    r2 = [0,0]
+    r3 = [0,0]
+    for item in aux:
+        g2 = g.copy()
+        pAux = classes.Personagem(item, g)
+        zerarNo(g2,item)    
+        a1,lixo = guloso_facil(g2,pAux)
+        g2 = g.copy()
+        pAux = classes.Personagem(item, g)
+        zerarNo(g2,item)    
+        a2,lixo = guloso_medio(g2,pAux)
+        g2 = g.copy()
+        pAux = classes.Personagem(item, g)
+        zerarNo(g2,item)    
+        a3,lixo = guloso_dificil(g2,pAux)
+        print(f"Cidade: {item}, a1: {a1}, a2: {a2}, a3: {a3}")
+        if a3 > a2 >= a1:
+            r3[0] += 1
+        elif a3 == a2 > a1:
+            r2[1] += 1
+            r3[1] += 1
+        elif a3 == a2 == a1:
+            r1[1] += 1
+            r2[1] += 1
+            r3[1] += 1
+        elif a2 > a3 and a2 > a1:
+            r2[0] += 1
+        elif a2 == a1 > a3:
+            r1[1] += 1
+            r2[1] += 1
+        elif a1 > a2 and a1 > a3:
+            r1[0] += 1
+
+    print(f"Resultado do fácil: {r1[0]} vitória e {r1[1]} empates em primeiro")
+    print(f"Resultado do médio: {r2[0]} vitória e {r2[1]} empates em primeiro")
+    print(f"Resultado do difícil: {r3[0]} vitória e {r3[1]} empates em primeiro") 
