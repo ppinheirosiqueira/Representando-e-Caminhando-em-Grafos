@@ -71,8 +71,10 @@ def guloso_dificil(g, personagem):
         if item not in rota:
             rotaAux.append(item)
 
-    for i in range(1,len(rotaAux)-1): # Não posso trocar o primeiro elemento, é dele que o jogador começa
-        for j in range(2,len(rotaAux)):
+    i = 1 # Não posso trocar o primeiro elemento, é dele que o jogador começa
+    while i < len(rotaAux)-1: 
+        j = i + 1
+        while j < len(rotaAux):
             g2 = g.copy()
             pAux = personagem.copy(g)
             troca(rotaAux,i,j) # Realizo uma troca na rota
@@ -80,9 +82,12 @@ def guloso_dificil(g, personagem):
             if areaAux > area_obj: # Se a área nova é melhor que a atual, troco a rota nova
                 rota = copy.deepcopy(rota2)
                 area_obj = areaAux
+                i = 0
+                break
             else:
                 troca(rotaAux,i,j) # Se a troca não melhorou, retorno para o que era
-
+                j += 1
+        i += 1
     return area_obj, rota
 
 def apos_escolha(personagem,nome,g):

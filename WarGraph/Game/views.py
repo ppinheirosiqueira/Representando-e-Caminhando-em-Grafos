@@ -85,6 +85,7 @@ def start(request):
     global area_obj
     global p
     global rota
+    global mode
 
     #graph.testarDificuldades(g)
 
@@ -100,9 +101,9 @@ def start(request):
 
     graph.zerarNo(g,p.Localizacao)    
     g2 = g.copy()
-    if dificuldade == 1:
+    if mode == 1:
         area_obj, rota = graph.guloso_facil(g2,p)
-    elif dificuldade == 2:
+    elif mode == 2:
         area_obj, rota = graph.guloso_medio(g2,p)
     else:
         area_obj, rota = graph.guloso_dificil(g2,p)
@@ -166,7 +167,7 @@ def jogo(request):
             mapa = mapa + '🍗: ' + str(g.vertices[vizinho].Suprimentos) + '</span></a>'
             p.Opcoes += 1
         else: # Adicionando pontos que você não pode ir
-            mapa = mapa + '<a style="bottom:' + str(100*(abs(g.vertices[vizinho].Y - smallY))/rangeY) + '%;left:' + str(100*(abs(g.vertices[vizinho].X - smallX))/rangeX) + '%;">'
+            mapa = mapa + '<a style="bottom:' + str(100*(abs(5 + g.vertices[vizinho].Y - smallY))/rangeY) + '%;left:' + str(100*(abs(5 + g.vertices[vizinho].X - smallX))/rangeX) + '%;">'
             mapa = mapa + '<img src="static/imagens/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones"><br>' + vizinho
             mapa = mapa + '<span class="tooltiptext">Já visitado</span></a>'
 
