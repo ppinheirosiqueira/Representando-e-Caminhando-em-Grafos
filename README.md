@@ -4,43 +4,42 @@
 [![requirement](https://img.shields.io/badge/Framework-Django-darkgreen)](https://www.djangoproject.com)
 [![requirement](https://img.shields.io/badge/IDE-Visual%20Studio%20Code-informational)](https://code.visualstudio.com/docs/?dv=linux64_deb)
 
+# Sumário
+
+1. <a href=#introdução>Introdução</a>
+2. <a href=#objetivo>Objetivo</a>
+3. <a href=#problema-abordado>Problema Abordado</a>
+4. <a href=#jogo>Jogo</a>
+   1. <a href=#como-rodar-o-jogo>Como rodar o jogo</a>
+   2. <a href=#modificando-os-arquivos-do-jogo>Modificando os arquivos do jogo</a>
+   3. <a href=#background-do-jogo>Background do jogo</a>
+   4. <a href=#jogando>Jogando</a>
+5. <a href=#implementação>Implementação</a>
+   1. <a href=#classes-classespy>Classes</a>
+   2. <a href=#importação-arquivospy>Importando Arquivos</a>
+   3. <a href=#dificuldades-graphpy>Dificuldade</a>
+   4. <a href=#funções-do-jogo-gamepy>Funções do Jogo</a>
+   5. <a href=#telas-viewspy>Telas</a>
+
+# Introdução
+
+
+
 # Objetivo
 
 Neste trabalho o objetivo é aplicar as estruturas em grafos para solucionar um problema real qualquer.
 
 # Problema Abordado
 
-Meu problema é um grafo com arestas ponderadas para um problema mono objetivo, cuja distância é suficiente para obter bons resultados. Existe a possibilidade de ser multi objetivo porém esse não é o foco do seu esforço para esse trabalho. - <span style="color:red;">REESCREVE PEDRO</span>
+O problema é um grafo com arestas ponderadas para um problema mono objetivo, cuja distância é suficiente para obter bons resultados. Existe a possibilidade de ser multi objetivo porém esse não é o foco do seu esforço para esse trabalho. - <span style="color:red;">REESCREVE PEDRO</span>
 
 Este problema foi abordado com a criação de um jogo simples de escolhas.
 
-## Dados do Jogo
+# Jogo
 
-O jogo funciona com base em um Grafo não orientado com arestas ponderadas. 
 
-Além dessas o vértice possui a booleana Visitado, variável que é setada como False na criação do Vértice. E a lista de adjacências.
 
-O peso das arestas é determinado pela distância entre os dois vértices, sendo esta a distância de Manhattan, que pode ser vista pela fórmula:
 
-$$ dis = |x_{i} - x_{j}| + |y_{i} - y_{j}| $$
-
-Pela forma que o problema foi proposto, foi decidido que cada Vértice teria sua lista de Adjacentes, visto que o Grafo criado não é denso o suficiente para justificar a matriz de adjacência.
-
-## Background do Jogo
-
-Como todo jogo precisa de um Backgruond, um simples foi criado para este, o background pode ser encontrado na aba About, junto com as Regras para a pessoa jogar. No entanto, para boa prática, colocaremos aqui também:
-
-<p style="width:70%;text-align:justify;margin:auto;">Você é um general com grandes chances de perder o seu emprego<strike>, ou sua cabeça</strike>. Invadiram o território de seu país e agora você se vê em um único ponto, uma última cidade, sem chance alguma de reaver o território por inteiro sem a decorrência de grandes sacrifícios. Descrentes de sua inteligência e capacidade, seus últimos aliados contratam um grupo de pessoas, que claramente não sabia o que estava fazendo, para criar um algoritmo que tomasse a melhor decisão de qual local atacar em seguida. Você furioso, partiu com seus homens para mostrar que conseguiria tomar uma rota melhor do que a deste algoritmo maldito antes mesmo de ver seu resultado.<p><br>
-
-<p style="width:70%;text-align:justify;margin:auto;">War Graph é um jogo simples de tomada de decisões criado com o único objetivo de seus criadores utilizarem a estrutura de dados chamada Grafo. Seu objetivo primário neste jogo é conquistar uma área maior ou igual a do algoritmo utilizado (varia de acordo com a dificuldade escolhida).<p><br>
-
-<p style="width:70%;text-align:justify;margin:auto;">Seus soldados possuem ❤️ (vida) e 🍗 (suprimentos) e gastam ambos para conquistar qualquer ponto que você vá no mapa. Suprimentos também são gastos para visitar bases já conquistadas. O gasto de 🍗 depende da 📏 (distância) percorrida, quanto mais longe, mais suprimentos serão gastos. Já a sua vida é gasta em combate, cada local possui sua própria infantaria de resistência e para ser conquistado é necessário que o seus soldados paguem com sua ❤️. Um adendo, também é possível perder vida por fome, caso você vá para um local tão distante que seus suprimentos acabem no meio da viagem, sua ❤️ começará a ser consumida no lugar.<p><br>
-
-<p style="width:70%;text-align:justify;margin:auto;">Cada base a ser conquistada possui seu ⚔️ (poderio militar), 🍗 (suprimentos), 🩹 (medicamentos) e 🗺️ (área). Caso sobreviva a viagem e a batalha, após acabar com o ⚔️ adversário, seu exército recebe todos os outros recursos, que são somados a seus 🍗 (suprimentos), ❤️ (vida) e 🗺️ (área) respectivamente.<p><br>
-
-<p style="width:70%;text-align:justify;margin:auto;">Quando uma cidade nunca foi visitada, seu símbolo no mapa aparecerá com a <span style="color:#90EE90;">cor verde</span>, quando já foi visitada, irá aparecer com a <span style="color: lightcoral;">cor vermelha</span>, caso essa cidade seja uma base, após visitada ela aparecerá com a cor <span style="color: lightblue;">cor azul</span>, indicando que pode ser revisitada, porém o jogador não ganhará recursos o fazendo. O ponto que você está aparece com uma <span style="color:white">cor branca</span>.<p><br>
-
-<p style="width:70%;text-align:justify;margin:auto;">Para vencer basta provar seu valor. Conquiste uma área no mínimo igual ao do algoritmo e mostre que seus aliados não deveriam desistir de você tão facilmente.<p><br>
 
 ## Como rodar o Jogo
 
@@ -62,7 +61,7 @@ Para modificar os arquivos do jogo é necessário alterar os arquivos .csv dentr
 
 Ao alterar qualquer arquivo é necessário rodar novamente o jogo com comando especificado em <a href=#como-rodar-o-jogo>Como rodar o jogo</a>. Ao fazer isso, caso não tenha errado na alteração dos arquivos, não verá mensagens de erro no terminal. Caso erre, poderá aparecer duas mensagens diferentes, ou talvez até ambas em conjunto:
 
-<p align=center><img src="imgs/Erro_vertices.png" width="300px"/><img src="imgs/erro_arestas.png" width="300px"/><p>
+<p align=center><img src="imgs/Erro_vertices.png" width="300px"/><img src="imgs/erro_arestas.png" width="320px"/><p>
 
 Esses erros ocorrem quando acabou colocando algum vértice com acento ou com dados faltantes, enquanto nas arestas ocorre geralmente quando você quis adicionar alguma aresta onde o vértice dela não existe.
 
@@ -70,13 +69,29 @@ Recomendo que não crie vértices nas mesmas coordenadas que vértices já exist
 
 Uma limitação real é que o vértice não pode ter o mesmo nome que outro vértice, não ocasionará em erro, mas o vértice que vier depois no arquivo simplesmente não será adicionado ao Grafo.
 
+## Background do Jogo
+
+Como todo jogo precisa de um Backgruond, um simples foi criado para este, o background pode ser encontrado na aba About, junto com as Regras para a pessoa jogar. No entanto, para boa prática, colocaremos aqui também:
+
+<p style="width:70%;text-align:justify;margin:auto;">Você é um general com grandes chances de perder o seu emprego<strike>, ou sua cabeça</strike>. Invadiram o território de seu país e agora você se vê em um único ponto, uma última cidade, sem chance alguma de reaver o território por inteiro sem a decorrência de grandes sacrifícios. Descrentes de sua inteligência e capacidade, seus últimos aliados contratam um grupo de pessoas, que claramente não sabia o que estava fazendo, para criar um algoritmo que tomasse a melhor decisão de qual local atacar em seguida. Você furioso, partiu com seus homens para mostrar que conseguiria tomar uma rota melhor do que a deste algoritmo maldito antes mesmo de ver seu resultado.<p><br>
+
+<p style="width:70%;text-align:justify;margin:auto;">War Graph é um jogo simples de tomada de decisões criado com o único objetivo de seus criadores utilizarem a estrutura de dados chamada Grafo. Seu objetivo primário neste jogo é conquistar uma área maior ou igual a do algoritmo utilizado (varia de acordo com a dificuldade escolhida).<p><br>
+
+<p style="width:70%;text-align:justify;margin:auto;">Seus soldados possuem ❤️ (vida) e 🍗 (suprimentos) e gastam ambos para conquistar qualquer ponto que você vá no mapa. Suprimentos também são gastos para visitar bases já conquistadas. O gasto de 🍗 depende da 📏 (distância) percorrida, quanto mais longe, mais suprimentos serão gastos. Já a sua vida é gasta em combate, cada local possui sua própria infantaria de resistência e para ser conquistado é necessário que o seus soldados paguem com sua ❤️. Um adendo, também é possível perder vida por fome, caso você vá para um local tão distante que seus suprimentos acabem no meio da viagem, sua ❤️ começará a ser consumida no lugar.<p><br>
+
+<p style="width:70%;text-align:justify;margin:auto;">Cada base a ser conquistada possui seu ⚔️ (poderio militar), 🍗 (suprimentos), 🩹 (medicamentos) e 🗺️ (área). Caso sobreviva a viagem e a batalha, após acabar com o ⚔️ adversário, seu exército recebe todos os outros recursos, que são somados a seus 🍗 (suprimentos), ❤️ (vida) e 🗺️ (área) respectivamente.<p><br>
+
+<p style="width:70%;text-align:justify;margin:auto;">Quando uma cidade nunca foi visitada, seu símbolo no mapa aparecerá com a <span style="color:#90EE90;">cor verde</span>, quando já foi visitada, irá aparecer com a <span style="color: lightcoral;">cor vermelha</span>, caso essa cidade seja uma base, após visitada ela aparecerá com a cor <span style="color: lightblue;">cor azul</span>, indicando que pode ser revisitada, porém o jogador não ganhará recursos o fazendo. O ponto que você está aparece com uma <span style="color:white">cor branca</span>.<p><br>
+
+<p style="width:70%;text-align:justify;margin:auto;">Para vencer basta provar seu valor. Conquiste uma área no mínimo igual ao do algoritmo e mostre que seus aliados não deveriam desistir de você tão facilmente.<p><br>
+
 ## Jogando
 
 Após colocar o jogo para rodar, é necessário ir ao <a href="http://127.0.0.1:8000/">link</a> como mencionado anteriormente. Nele, o jogador verá o seguinte menu:
 
 <p align=center><img src="imgs/menu.png" width="400px"/><p>
 
-O primeiro botão começará o jogo. O segundo botão levará o jogador a um menu de opções para que escolha qual cidade deseja iniciar o jogo. O terceiro botão leva o jogador a um menu de escolha das dificuldades possíveis para o jogo, sendo elas fácil, normal e difícil, a diferença entre elas para o jogador é meramente a quantidade de área que o jogador precisa conquistar para vencer o jogo. A diferença para o programador será comentada e explicada na sessão de <a href=#-implementação>implementação</a>. O último botão, como mencionado anteriormente, levará a uma tela que explicará o jogo para o jogador.
+O primeiro botão começará o jogo. O segundo botão levará o jogador a um menu de opções para que escolha qual cidade deseja iniciar o jogo. O terceiro botão leva o jogador a um menu de escolha das dificuldades possíveis para o jogo, sendo elas fácil, normal e difícil, a diferença entre elas para o jogador é meramente a quantidade de área que o jogador precisa conquistar para vencer o jogo. A diferença para o programador será comentada e explicada na sessão de <a href=#implementação>implementação</a>. O último botão, como mencionado anteriormente, levará a uma tela que explicará o jogo para o jogador.
 
 Ao iniciar o jogo, o jogador será levado para a tela a seguir:
 
@@ -117,7 +132,7 @@ A classe personagem é utilizada tanto pelo jogador constantemente, onde os stat
 
 Esta classe possui 8 métodos.
 
-#### __init__
+#### \_\_init\_\_
 
 O método construtor do Python. Ao se criar um personagem é necessário enviar o local inicial dele e o grafo. Com isso, tanto a localização quanto o Caminho já podem ser atualizados inicialmente. Opções sempre será igual a 0 no começo. A área inicial do personagem será igual a área do vértice que começou. Já seus Suprimentos e Vida são iguais a 100 mais o que existe no vértice que começou.
 
@@ -166,7 +181,7 @@ A classe vértice possui a maior parte das informações necessárias para que o
 
 Esta classe possui 5 métodos.
 
-#### __init__
+#### \_\_init\_\_
 
 Método principal do Vértice, onde Nome, X, Y, Suprimentos, Medicamentos, Força, Base e Área são recebidos como parâmetro da leitura de arquivos. Visitado é setado como False, pois é impossível um Vértice ter sido visitado em sua criação. E é criada uma lista vazia de Vizinhos.
 
@@ -192,7 +207,7 @@ O Grafo em si, por ser um grafo com lista de adjacentes, acaba se tornando um gr
 
 Esta classe possui 9 métodos
 
-#### __init__
+#### \_\_init\_\_
 
 Ao ser iniciado, o grafo só possui um dicionário vazio de nome Vértices.
 
@@ -282,11 +297,15 @@ $$ chance = {100 * \text{finais com área maior que o objetivo} \over \text{fina
 
 ## Funções do Jogo (game.py)
 
-A única função do jogo que existe e ainda é utilizada é o cálculo da distância de Manhattan, que determina o peso das arestas de acordo com o Nome do vértice que o jogador está, o Nome do vértice que o jogador vai e o grafo em si.
+Apesar de ser dito que o problema possuia arestas ponderadas, não existe nenhuma amostra disso na implementação das classes ou nos arquivos. Isso se deve pois o peso de cada aresta é calculado sempre que algum vizinho é olhado do ponto atual para ele, sendo a distância que as cidades possuem de uma para a outra. Isso é feito pela única função do `game.py` que ainda é utilizada. Essa distância é calculada pela fórmula de distância de Manhattan, que determina o peso das arestas de acordo com o Nome do vértice que o jogador está, o Nome do vértice que o jogador vai e o grafo em si. Essa distância utiliza a seguinte fórmula:
 
-Anteriormente existiam duas outras funções, uma para determinar a localização do Jogador, pois este possuiria só as coordenadas e não o nome do local em que estivesse, pois o modo de jogo havia sido imaginado de uma forma um pouco diferente.
+$$ dis = |x_{i} - x_{j}| + |y_{i} - y_{j}| $$
 
-Outra função que se tornou obsoleta, foi mais pela necessidade de se fazer as dificuldades. Anteriormente o combate ocorreria ou não dependendo da distância que o jogador percorresse até o outro vértice. Como se havendo um exército inimigo que defende uma cidade vindo do ponto que você está, você gastando mais tempo para chegar lá indica que houvesse mais tempo para que este exército circundasse na cidade e visse o seu exército chegando. No entanto, sendo probabilidade de chance de ocorrer, ficaria difícil de fazer uma dificuldade, dado que o algoritmo poderia acabar combatendo em vértices que o jogador não e vice versa.
+Sendo assim uma fórmula impossível de possuir resultados em ponto flutuante dado que as coordenadas utilizadas no jogo são inteiros. Isso foi desejado para não existir uma complicação desnecessária para os jogadores.
+
+Além desta função, anteriormente existiam duas outras funções, uma para determinar a localização do Jogador, pois este possuiria só as coordenadas e não o nome do local em que estivesse, pois o modo de jogo havia sido imaginado de uma forma um pouco diferente, onde não necessariamente começaria em um ponto especifico.
+
+Outra função que se tornou obsoleta, foi mais pela necessidade de se fazer as dificuldades. Anteriormente o combate ocorreria ou não dependendo da distância que o jogador percorresse até o outro vértice. Como se havendo um exército inimigo que defende uma cidade vindo do ponto que você está, você gastando mais tempo para chegar lá indica que houvesse mais tempo para que este exército circundasse na cidade e visse o seu exército chegando. No entanto, sendo probabilidade de chance de ocorrer, ficaria difícil de fazer uma dificuldade, dado que o algoritmo poderia acabar combatendo em vértices que o jogador não e vice versa, tornando-se um problema complicado de se pensar em como setar e que começaria a fugir muito do escopo do trabalho.
 
 ## Telas (views.py)
 
