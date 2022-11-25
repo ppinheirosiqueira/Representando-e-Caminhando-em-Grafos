@@ -76,11 +76,11 @@ Isso abrirá o servidor no <a href="127.0.0.1:8000">link padrão do Django</a>. 
 
 Para modificar os arquivos do jogo é necessário alterar os arquivos .csv dentro da pasta `...\Representando-e-Caminhando-em-Grafos\WarGraph\Game\static\arquivos`. Existem dois arquivos, o vertices.csv e o arestas.csv. Como os nomes indicam, eles possuem respectivamente os vértices e as arestas do grafo que será jogado. É possível alterar todos os pontos a própria vontade, seja adicionando arestas ou vértices. Relembrando que não pode se colocar acentos nos nomes das cidades.
 
-<center><img src="imgs/vertices.png" width="400px"/><img src="imgs/arestas.png" width="400px"/></center>
+<p align=center><img src="imgs/vertices.png" width="400px"/><img src="imgs/arestas.png" width="300px"/></p>
 
 Ao alterar qualquer arquivo é necessário rodar novamente o jogo com comando especificado em <a href="#como-rodar-o-jogo">Como rodar o jogo</a>. Ao fazer isso, caso não tenha errado na alteração dos arquivos, não verá mensagens de erro no terminal. Caso erre, poderá aparecer duas mensagens diferentes, ou talvez até ambas em conjunto:
 
-<center><img src="imgs/Erro_vertices.png" width="300px"/><img src="imgs/erro_arestas.png" width="300px"/></center>
+<p align=center><img src="imgs/Erro_vertices.png" width="300px"/><img src="imgs/erro_arestas.png" width="300px"/></p>
 
 Esses erros ocorrem quando acabou colocando algum vértice com acento ou com dados faltantes, enquanto nas arestas ocorre geralmente quando você quis adicionar alguma aresta onde o vértice dela não existe.
 
@@ -90,27 +90,88 @@ Recomendo que não crie vértices nas mesmas coordenadas que vértices já exist
 
 Após colocar o jogo para rodar, é necessário ir ao <a href="http://127.0.0.1:8000/">link</a> como mencionado anteriormente. Nele, o jogador verá o seguinte menu:
 
-<center><img src="imgs/menu.png" width="400px"/></center>
+<p align=center><img src="imgs/menu.png" width="400px"/></p>
 
 O primeiro botão começará o jogo. O segundo botão levará o jogador a um menu de opções para que escolha qual cidade deseja iniciar o jogo. O terceiro botão leva o jogador a um menu de escolha das dificuldades possíveis para o jogo, sendo elas fácil, normal e difícil, a diferença entre elas para o jogador é meramente a quantidade de área que o jogador precisa conquistar para vencer o jogo. A diferença para o programador será comentada e explicada na sessão de <a href="#-Implementação">implementação</a>. O último botão, como mencionado anteriormente, levará a uma tela que explicará o jogo para o jogador.
 
 Ao iniciar o jogo, o jogador será levado para a tela a seguir:
 
-<center><img src="imgs/jogo.png"/></center>
+<p align=center><img src="imgs/jogo.png"/></p>
 
 Na área em azul no canto esquerdo inferior está a área que o jogador precisa conquistar para vencer. Idealmente ele não saberia essa área, pelo menos até um certo ponto, pois o general saiu de sua base sem essa informação. Porém, para demonstração dos algoritmos implementados, foi de interesse do criador do código que esse objetivo fosse visível. Na parte superior a esquerda vemos a localização do jogador, no momento, como iniciamos em uma cidade aleatória, acabou que caímos em Passos. No canto superior direito vemos os status atual do jogador, para que este consiga tomar as decisões de acordo com sua situação atual.
 
 No centro vemos o mapa atual. Ribeirão Preto no exemplo é uma base, demonstrado pelo símbolo diferente que é um ponto onde podemos ir e voltar a vontade. Os demais pontos são pontos comuns, que só podem ser visitados uma única vez. Para se ver os dados de cada ponto, basta que se passe o mouse em cima do vértice desejado.
 
-<center><img src="imgs/jogo2.png"/></center>
+<p align=center><img src="imgs/jogo2.png"/></p>
 
-Esses dados não ficam sempre visíveis junto com o nome pois existem regiões com tantas cidades que a informação ficava muito poluída, sendo que mesmo sem eles ela já está bem poluída.
+Esses dados não ficam sempre visíveis junto com o nome pois existem regiões com tantas cidades que a informação ficava muito poluída, sendo que mesmo sem eles ela já está bem poluída para algumas cidades.
 
 A partir deste ponto basta o jogador ir clicando nas cidades que deseja ir, tomando sempre a rota que desejar.
 
 Ao finalizar, o jogador será levado para uma tela que o informa se venceu ou perdeu o jogo, além das rotas que ele e o algoritmo tomou. Novamente, esta não seria a opção ideal para um jogo, pois estamos deliberadamente contando ao jogador qual caminho ele precisa fazer para vencer, porém, para o propósito do trabalho e do grafo, acaba sendo necessário demonstrar tais caminhos.
 
-<center><img src="imgs/game_over.png"/></center>
+<p align=center><img src="imgs/game_over.png" width="400px"/></p>
 
 # Implementação
 
+## Classes (classes.py)
+
+O programa possui três classes principais. O Personagem, o Grafo e o Vértice.
+
+### Personagem
+
+### Vértice
+
+### Grafo
+
+## Importação (arquivos.py)
+
+## Dificuldades (graph.py)
+
+O jogo funciona com três dificuldades, sendo elas as dificuldades Fácil, Normal e Difícil. O objetivo dessas dificuldades é que um algoritmo um pouco mais complexo fosse executado para que a área final obtida fosse maior. Abaixo falarei qual foi a lógica usada para cada uma delas e o que poderia ser feito para melhorar ainda mais a dificuldade.
+
+Como dito no <a href="#problema-abordado">tópico Problema Abordado</a> o problema poderia ser tratado como multiobjetivo, no entanto neste trabalho foram utilizados algoritmos que se importam meramente com um objetivo, o de maximizar a área.
+
+### Fácil
+
+No modo Fácil o jogador jogará com o algoritmo Guloso mais simples possível, onde será checado qual o vizinho (possível de ser visitado) que possui a maior área de todas e tentará ir para este ponto, independente da quantidade de vida, suprimentos, exército inimigo, ou qualquer outra coisa. Retornando assim a área final obtida pelo guloso e qual foi a rota que esse guloso fez.
+
+### Normal
+
+No modo Normal o jogador continuará jogando contra um algoritmo guloso bem simples, porém este não checará meramente qual o de maior área entre os vizinhos. Ele checará também se o jogador possui uma quantidade de vida maior do que o exército inimigo que será combatido, indo para a maior área que esta condição é atendida. Retornando assim a área final obtida pelo guloso e qual foi a rota que esse guloso fez.
+
+### Difícil
+
+No modo Difícil é realizada uma heurística bem simples. Ela começa pegando o resultado da dificuldade Normal e tentará trabalhar em cima dela para melhorá-la. Para isso são adicionados a rota todos os vértices do Grafo que não foram visitados no modo Normal.
+
+A partir daí, uma repetição começa a ser realizada, onde se troca o item visitado i pelo item visitado j. Sendo que i começa do segundo ponto da rota (pois o primeiro é imutável dado que é a localização inicial do jogador) indo até o penúltimo ponto, e j começa do terceiro ponto da rota indo até o último. Durante esta repetição é realizado o cálculo de se a rota nova obtida é melhor que a que voltou do modo Normal ou não.
+
+Para essa avaliação é realizada a lógica simples de se começar na posição inicial do vetor e tentar visitar a posição seguinte, se não puder, tentar visitar a próxima, pois como foram realizadas trocas, não temos a certeza de que o ponto trocado é vizinho dos seus adjacentes no vetor, sendo sempre necessário checar se é ou não vizinho então do ponto atual que se está. O personagem vai andando neste vetor até morrer e quando isso ocorrer é verificada se a área que ele conseguiu é maior ou não do que a área que o modo Normal conseguiu.
+
+Caso a área da troca seja maior, esta nova rota é salva, e o loop das trocas recomeça do começo do vetor. Ao realizar todo o loop de troca sem executar alguma troca melhor, o programa finaliza.
+
+Com os 41 vértices que existem neste grafo colocado neste trabalho, junto das 97 arestas, o modo Difícil apresentou um resultado melhor do que o modo Normal em 26 deles. Este teste pode ser visto rodando a função testarDificuldades existente no graph.py.
+
+### Outras formas de modificar a dificuldade
+
+Seria possível realizar métodos gulosos diferentes no Fácil e no Normal, que ao invés de só olharem a área ganha, olhassem para o ponto vizinho onde o jogador "sofreria" menos, indo para o ponto onde o balanço de exército inimigo e medicamentos fosse próximo, e o quanto o jogador perderá com a distância é compensado pelos suprimentos do local. 
+
+Outra ideia possível seria visitar o vizinho que possui a maior razão área/vida perdida ao visitar o ponto, ao invés de só ir para o ponto com a maior área.
+
+Para o modo Difícil, imaginando que não foram alterados os anteriores, os pontos que são Bases poderiam ser adicionados mais de uma vez (até mesmo os já visitados), pois é possível que durante as trocas tenha alguma situação onde voltando uma vez para uma base acabasse indo para outro vértice depois e melhorasse, mas não é possível somente adicionando todos os pontos não visitados uma vez. 
+
+Outra forma é de executar uma troca dupla, onde poderia ocorrer com algum ponto talvez até mesmo aleatório, ao invés de só testar se uma troca é o suficiente para melhorar o resultado final do algoritmo.
+
+O problema nas alterações do modo Difícil sugeridas é que o jogo poderia ficar muito lento a depender de quantos pontos a mais fossem adicionados para serem comparados, sendo que o modo Difícil atual já é bem mais lento do que os outros dois.
+
+### Função não utilizada mais
+
+O método de caminhamento pensado anteriormente para o Grafo e que seria apresentado neste trabalho seria um BFS modificado. No começo a ideia era de que os gulosos determinariam a área para as três dificuldades e o jogador ao escolher andar veria qual era a % de chance dele vencer a cada movimento. No entanto, para esse cálculo o BFS normal não é o suficiente, pois neste jogo o jogador estando no ponto A, indo para o ponto B e depois para o C é diferente de estar no ponto A, ir para o C e depois para o B. Além de o BFS por si só meramente tentar percorrer todo o grafo sem se importar necessariamente com a rota prevista, querendo achar algum ponto, no nosso caso não existe um vértice 
+
+## Funções do Jogo (game.py)
+
+A única função do jogo que existe e ainda é utilizada é o cálculo da distância de Manhattan, que determina o peso das arestas de acordo com o Nome do vértice que o jogador está, o Nome do vértice que o jogador vai e o grafo em si.
+
+Anteriormente existiam duas outras funções, uma para determinar a localização do Jogador, pois este possuiria só as coordenadas e não o nome do local em que estivesse, pois o modo de jogo havia sido imaginado de uma forma um pouco diferente.
+
+Outra função que se tornou obsoleta, foi mais pela necessidade de se fazer as dificuldades. Anteriormente o combate ocorreria ou não dependendo da distância que o jogador percorresse até o outro vértice. Como se havendo um exército inimigo que defende uma cidade vindo do ponto que você está, você gastando mais tempo para chegar lá indica que houvesse mais tempo para que este exército circundasse na cidade e visse o seu exército chegando. No entanto, sendo probabilidade de chance de ocorrer, ficaria difícil de fazer uma dificuldade, dado que o algoritmo poderia acabar combatendo em vértices que o jogador não e vice versa.
