@@ -76,11 +76,11 @@ Isso abrirá o servidor no <a href="127.0.0.1:8000">link padrão do Django</a>. 
 
 Para modificar os arquivos do jogo é necessário alterar os arquivos .csv dentro da pasta `...\Representando-e-Caminhando-em-Grafos\WarGraph\Game\static\arquivos`. Existem dois arquivos, o vertices.csv e o arestas.csv. Como os nomes indicam, eles possuem respectivamente os vértices e as arestas do grafo que será jogado. É possível alterar todos os pontos a própria vontade, seja adicionando arestas ou vértices. Relembrando que não pode se colocar acentos nos nomes das cidades.
 
-<center><img src="imgs/vertices.png" width="500px"/><img src="imgs/arestas.png" width="400px"/></center>
+<center><img src="imgs/vertices.png" width="400px"/><img src="imgs/arestas.png" width="400px"/></center>
 
-Ao alterar qualquer arquivo é necessário rodar novamente o jogo com comando especificado em <a href="#-Como-rodar-o-Jogo">Como rodar o jogo</a>. Ao fazer isso, caso não tenha errado na alteração dos arquivos, não verá mensagens de erro no terminal. Caso erre, poderá aparecer duas mensagens diferentes, ou talvez até ambas em conjunto:
+Ao alterar qualquer arquivo é necessário rodar novamente o jogo com comando especificado em <a href="#como-rodar-o-jogo">Como rodar o jogo</a>. Ao fazer isso, caso não tenha errado na alteração dos arquivos, não verá mensagens de erro no terminal. Caso erre, poderá aparecer duas mensagens diferentes, ou talvez até ambas em conjunto:
 
-<center><img src="imgs/Erro_vertices.png" width="400px"/><img src="imgs/erro_arestas.png" width="400px"/></center>
+<center><img src="imgs/Erro_vertices.png" width="300px"/><img src="imgs/erro_arestas.png" width="300px"/></center>
 
 Esses erros ocorrem quando acabou colocando algum vértice com acento ou com dados faltantes, enquanto nas arestas ocorre geralmente quando você quis adicionar alguma aresta onde o vértice dela não existe.
 
