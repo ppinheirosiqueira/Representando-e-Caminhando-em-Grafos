@@ -4,6 +4,9 @@ from django.urls import reverse
 
 from . import arquivos, classes, game, graph
 
+"""
+Ao iniciar o aplicativo o jogo é setado para escolher a dificuldade média, com uma cidade aleatória e criar o grafo de acordo com os arquivos
+"""
 mode = 2
 inicial = "aleatoria"
 g  = arquivos.colher_dados() # Inicia o Grafo
@@ -94,9 +97,6 @@ def start(request):
     else:
         p = classes.Personagem(g.randomVertice(),g) # Inicia o Personagem com uma cidade randômica
 
-    if len(g.vertices[p.Localizacao].Vizinhos) == 0:
-        return HttpResponseRedirect(reverse('fim',None))
-
     # p.print_personagem()
 
     graph.zerarNo(g,p.Localizacao)    
@@ -107,6 +107,9 @@ def start(request):
         area_obj, rota = graph.guloso_medio(g2,p)
     else:
         area_obj, rota = graph.guloso_dificil(g2,p)
+
+    if len(g.vertices[p.Localizacao].Vizinhos) == 0:
+        return HttpResponseRedirect(reverse('fim',None))
 
     return HttpResponseRedirect(reverse('jogo',None))
 
@@ -138,9 +141,9 @@ def jogo(request):
 
     mapa = ""
     # Adicionando onde você está
-    mapa = mapa + '<a style="bottom:' + str(100*(abs(5 + g.vertices[p.Localizacao].Y - smallY))/rangeY) + '%;left:' +  str(100*(abs(5 + g.vertices[p.Localizacao].X - smallX))/rangeX) + '%;">'
-    mapa = mapa + '<img src="static/imagens/' + auxP + '.svg" alt="' + p.Localizacao + '" class="filter-white icones"><br>' + p.Localizacao
-    mapa = mapa + '<span class="tooltiptext">Estou Aqui</span></a>'
+    mapa += '<a style="bottom:' + str(100*(abs(5 + g.vertices[p.Localizacao].Y - smallY))/rangeY) + '%;left:' +  str(100*(abs(5 + g.vertices[p.Localizacao].X - smallX))/rangeX) + '%;">'
+    mapa += '<img src="static/imagens/' + auxP + '.svg" alt="' + p.Localizacao + '" class="filter-white icones"><br>' + p.Localizacao
+    mapa += '<span class="tooltiptext">Estou Aqui</span></a>'
     
     for vizinho in g.vertices[p.Localizacao].Vizinhos:
         if g.vertices[vizinho].Base:
@@ -157,19 +160,23 @@ def jogo(request):
                 auxC = "filter-green"
 
         if not g.vertices[vizinho].Visitado or g.vertices[vizinho].Base: # Adicionando pontos que você pode ir
-            mapa = mapa + '<a href="escolha/' +  vizinho + '" style="bottom:' +  str(100*(5 + abs(g.vertices[vizinho].Y - smallY))/rangeY) + '%;left:' +  str(100*(abs(5 + g.vertices[vizinho].X - smallX))/rangeX) + '%;">'
-            mapa = mapa + '<img src="static/imagens/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones"><br>' + vizinho
-            mapa = mapa + '<span class="tooltiptext">'
-            mapa = mapa + '📏: ' + str(game.distancia(p.Localizacao,vizinho,g))
-            mapa = mapa + ' 🗺️: ' + str(g.vertices[vizinho].Area)  + '<br>'
-            mapa = mapa + '⚔️: ' + str(g.vertices[vizinho].Strength)
-            mapa = mapa + ' 🩹: ' + str(g.vertices[vizinho].Medicamentos) + '<br>'
-            mapa = mapa + '🍗: ' + str(g.vertices[vizinho].Suprimentos) + '</span></a>'
+            mapa += '<a href="escolha/' +  vizinho + '" style="bottom:' +  str(100*(5 + abs(g.vertices[vizinho].Y - smallY))/rangeY) + '%;left:' +  str(100*(abs(5 + g.vertices[vizinho].X - smallX))/rangeX) + '%;">'
+            mapa += '<img src="static/imagens/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones"><br>' + vizinho
+            mapa += '<span class="tooltiptext">'
+            mapa += '📏: ' + str(game.distancia(p.Localizacao,vizinho,g))
+            if g.vertices[vizinho].Base and g.vertices[vizinho].Visitado:
+                mapa += "<br>Já visitado"
+            else:
+                mapa += ' ⚔️: ' + str(g.vertices[vizinho].Strength) + '<br>'
+                mapa += '🗺️: ' + str(g.vertices[vizinho].Area)  
+                mapa += ' 🩹: ' + str(g.vertices[vizinho].Medicamentos) + '<br>'
+                mapa += '🍗: ' + str(g.vertices[vizinho].Suprimentos)
+            mapa += '</span></a>'
             p.Opcoes += 1
         else: # Adicionando pontos que você não pode ir
-            mapa = mapa + '<a style="bottom:' + str(100*(abs(5 + g.vertices[vizinho].Y - smallY))/rangeY) + '%;left:' + str(100*(abs(5 + g.vertices[vizinho].X - smallX))/rangeX) + '%;">'
-            mapa = mapa + '<img src="static/imagens/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones"><br>' + vizinho
-            mapa = mapa + '<span class="tooltiptext">Já visitado</span></a>'
+            mapa += '<a style="bottom:' + str(100*(abs(g.vertices[vizinho].Y - smallY))/rangeY) + '%;left:' + str(100*(abs(g.vertices[vizinho].X - smallX))/rangeX) + '%;">'
+            mapa += '<img src="static/imagens/' + auxP + '.svg" alt="' + vizinho + '" class="' + auxC + ' icones"><br>' + vizinho
+            mapa += '<span class="tooltiptext">Já visitado</span></a>'
 
     if p.Opcoes == 0:
         return HttpResponseRedirect(reverse('fim',None))

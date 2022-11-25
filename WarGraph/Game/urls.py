@@ -2,6 +2,11 @@ from django.urls import path
 
 from . import views
 
+"""
+Aqui são colocadas as URL's utilizadas pelo aplicativo Game para decidir quais funções são chamadas em cada URL do jogo.
+As funções no Views retornam algum render, que determina o HTML que será utilizado e mostrado ao jogador.
+"""
+
 urlpatterns = [
     path('', views.index, name="index"),
     path('start', views.start, name="start"),
