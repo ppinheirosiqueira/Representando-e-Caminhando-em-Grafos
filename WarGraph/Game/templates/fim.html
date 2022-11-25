@@ -12,11 +12,11 @@
     <body>
         <div class="fim">
             {% if vizinhos != 0 %}
-                {% if vida > 0 %}
-                    {% if area == area_obj %}
+                {% if p.vida > 0 %}
+                    {% if p.Area == area_obj %}
                         <div class="title bom"><h1>Parabéns</h1></div>
                         <div class="texto">Você venceu por pouco!</div>
-                    {% elif area > area_obj %}
+                    {% elif p.Area > area_obj %}
                         <div class="title bom"><h1>Parabéns</h1></div>
                     {% else%}
                         <div class="title ruim"><h1>GAME OVER</h1></div>
@@ -26,11 +26,11 @@
                     <div class="title ruim"><h1>GAME OVER</h1></div>
                 {% endif %}
                 <div class="texto">
-                    Sua área final foi de {{ area }}, a área da IA foi {{ area_obj }}<br><br>
+                    Sua área final foi de {{ p.Area }}, a área da IA foi {{ area_obj }}<br><br>
                     <div class="rotas">
                         <div class="lista">
                             A sua rota foi:
-                            {% for item in rota_jog %}
+                            {% for item in p.Caminho %}
                                 <span>{{ item }}</span>
                             {% endfor %}
                         </div>

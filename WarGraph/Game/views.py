@@ -237,12 +237,10 @@ def fim(request):
     global rota
     # Tela auxiliar de fim do jogo
     return render(request, "fim.html", {
-        "vida": p.Vida,
-        "area": p.Area,
+        "p": p,
         "area_obj": area_obj,
         "vizinhos": len(g.vertices[p.Localizacao].Vizinhos),
         "rota": rota,
-        "rota_jog": p.Caminho,
     })
 
 def reset(request):
