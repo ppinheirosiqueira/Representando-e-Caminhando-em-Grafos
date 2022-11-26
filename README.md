@@ -7,49 +7,45 @@
 # Sumário
 
 1. <a href=#introdução>Introdução</a>
-2. <a href=#objetivo>Objetivo</a>
-3. <a href=#problema-abordado>Problema Abordado</a>
-4. <a href=#jogo>Jogo</a>
+2. <a href=#jogo>Jogo</a>
    1. <a href=#como-rodar-o-jogo>Como rodar o jogo</a>
    2. <a href=#modificando-os-arquivos-do-jogo>Modificando os arquivos do jogo</a>
    3. <a href=#background-do-jogo>Background do jogo</a>
    4. <a href=#jogando>Jogando</a>
-5. <a href=#implementação>Implementação</a>
+3. <a href=#implementação>Implementação</a>
    1. <a href=#classes-classespy>Classes</a>
    2. <a href=#importação-arquivospy>Importando Arquivos</a>
    3. <a href=#dificuldades-graphpy>Dificuldade</a>
    4. <a href=#funções-do-jogo-gamepy>Funções do Jogo</a>
-   5. <a href=#telas-viewspy>Telas</a>
+   5. <a href=#telas>Telas</a>
+      1. <a href=#urls-urlspy>URLs</a>
+      2. <a href=#html>HTML</a>
+      3. <a href=#views-viewspy>Views</a>
 
 # Introdução
 
+Este é um trabalho do aluno de Engenharia de Computação do CEFET-MG Campus V - Divinópolis, Pedro Pinheiro de Siqueira, para a disciplina de Algoritmos e Estruturas de Dados II (AEDSII). Este trabalho foi criado com o objetivo dos alunos aplicarem as estruturas de grafos para solucionar um problema real qualquer. Os alunos podiam escolher o problema e se utilizariam-se de C/C++ ou Python para o solucionar.
 
+O problema escolhido não foi exatamente um real, dado que o aluno preferiu criar seu próprio grafo em um jogo. No entanto, o problema que é trabalhado no grafo criado pelo aluno é o de um grafo com arestas ponderadas para um problema mono objetivo, mas que poderia ser multi objetivo dado que os vértices do Grafo apresentado possuem diversas informações. A solução mono objetivo é o suficiente para atender os critérios deste trabalho.
 
-# Objetivo
+Este problema foi abordado com a criação de um jogo simples de escolhas, onde o jogador terá que escolher para qual cidade (ou local) cuja distância é suficiente para obter bons resultados.
 
-Neste trabalho o objetivo é aplicar as estruturas em grafos para solucionar um problema real qualquer.
-
-# Problema Abordado
-
-O problema é um grafo com arestas ponderadas para um problema mono objetivo, cuja distância é suficiente para obter bons resultados. Existe a possibilidade de ser multi objetivo porém esse não é o foco do seu esforço para esse trabalho. - <span style="color:red;">REESCREVE PEDRO</span>
-
-Este problema foi abordado com a criação de um jogo simples de escolhas.
+Por ter se decidipo por fazer um jogo e possuir tempo limitado para realizar o trabalho, a linguagem Python foi escolhida, não só o aluno possui um costume maior com ela, mas conseguiria criar uma GUI miníma em browser utilizando-se do Framework Django presente em Python para que isso fosse possível.
 
 # Jogo
 
-
-
-
+War Graph é um jogo de browser onde o jogador precisa tomar decisões sem um conhecimento futuro próximo, sua próxima jogada poderia ser literalmente a última sem ter o real conhecimento disso. O objetivo do jogador é maximizar a área conquistada pelo seu exército.
 
 ## Como rodar o Jogo
 
-Para que este jogo rode é necessária a instalação do Python e do Django, o framework utilizado. O Python pode ser encontrado em seu <a href="https://www.python.org">site oficial</a>, a versão utilizada foi a 3.10 apesar de acreditarmos que seja possível utilizar uma versão inferior caso já tenha instalada em sua máquina. Durante a instalação tenha certeza de instalar o pip e de incluir o python no PATH do seu computador.
+Para que este jogo rode é necessária a instalação do Python e do Django, o framework utilizado. O Python pode ser encontrado em seu <a href="https://www.python.org">site oficial</a>, a versão utilizada foi a 3.10 apesar <i>de que deve ser possível utilizar uma versão inferior caso já tenha instalada em sua máquina</i>, no entanto, recomenda-se que instale pelo menos esta versão para se ter certeza. Durante a instalação tenha certeza de instalar o pip e de incluir o python no PATH do seu computador.
 
 As versões mais novas de Ptyhon já possuem o pip instalado automaticamente e por isso só é necessário atualizá-los antes de seguir adiante. Para testar se o seu está atualizado, basta abrir a linha de comando do seu computador e digitar `py -m pip install --upgrade pip`, onde o processo de atualização ocorrerá automaticamente se não estiver. Caso no seu caso não esteja nem mesmo instalado, por favor, siga o passo a passo do <a href="https://pip.pypa.io/en/latest/installation/">site do pip</a> para possuir a versão mais atualizada e não encontrar problemas nos passos posteriores.
 
-Com o python instalado, abra a linha de comando do seu computador e instale o django. Para isso, basta digitar na linha de comando `$ python -m pip install Django`, caso tenha instalado o python corretamente com o pip. Se este comando não funcionar, por favor, siga o passo a passo pode ser visto no <a href="https://docs.djangoproject.com/en/4.1/topics/install/#installing-official-release">site oficial do Django</a>.
+Com o python instalado, abra a linha de comando do seu computador e instale o django. Para isso, basta digitar na linha de comando `python -m pip install Django`, caso tenha instalado o python corretamente com o pip. Se este comando não funcionar, por favor, siga o passo a passo pode ser visto no <a href="https://docs.djangoproject.com/en/4.1/topics/install/#installing-official-release">site oficial do Django</a>.
 
-Com o Django instalado, abra a linha de comando no caminho `...\Representando-e-Caminhando-em-Grafos\WarGraph`, onde se encontram as pastas Game, WarGraph (que tem o mesmo nome da pasta que a engloba), e dois arquivos, o manage.py e um banco de dados (.sqlite3). Para abrir a linha de comando nesta pasta, basta digitar `cmd` na aba de endereços se estiver no windows, ou apertar com o botão direito e abrir o terminal se estiver no Linux. Com a linha de comanda aberta nesta pasta, digite o comando `python manage.py runserver`.
+Com o Django instalado, abra a linha de comando (terminal) no caminho `...\Representando-e-Caminhando-em-Grafos\WarGraph`, onde se encontram as pastas Game, WarGraph (que tem o mesmo nome da pasta que a engloba), e dois arquivos, o manage.py e um banco de dados (.sqlite3). Para abrir a linha de comando nesta pasta, basta digitar `cmd` na aba de endereços se estiver no W
+indows, ou apertar com o botão direito e abrir o terminal se estiver no Linux. Com a linha de comanda aberta nesta pasta, digite o comando `python manage.py runserver`.
 
 Isso abrirá o servidor no <a href="127.0.0.1:8000">link padrão do Django</a>. Caso deseje rodar em algum IP diferente, digite o comando `python manage.py runserver IP desejado:Porta Desejada`.
 
@@ -59,31 +55,32 @@ Para modificar os arquivos do jogo é necessário alterar os arquivos .csv dentr
 
 <p align=center><img src="imgs/vertices.png" width="400px"/><img src="imgs/arestas.png" width="300px"/><p>
 
-Ao alterar qualquer arquivo é necessário rodar novamente o jogo com comando especificado em <a href=#como-rodar-o-jogo>Como rodar o jogo</a>. Ao fazer isso, caso não tenha errado na alteração dos arquivos, não verá mensagens de erro no terminal. Caso erre, poderá aparecer duas mensagens diferentes, ou talvez até ambas em conjunto:
+Ao alterar qualquer arquivo é necessário rodar novamente o jogo com comando especificado em <a href=#como-rodar-o-jogo>como rodar o jogo</a>. Ao fazer isso, caso não tenha errado na alteração dos arquivos, não verá mensagens de erro no terminal. Caso erre, poderá aparecer duas mensagens diferentes, ou talvez até ambas em conjunto:
 
 <p align=center><img src="imgs/Erro_vertices.png" width="300px"/><img src="imgs/erro_arestas.png" width="320px"/><p>
 
-Esses erros ocorrem quando acabou colocando algum vértice com acento ou com dados faltantes, enquanto nas arestas ocorre geralmente quando você quis adicionar alguma aresta onde o vértice dela não existe.
+Esses erros ocorrem quando acabou colocando algum vértice com acento ou com dados faltantes, enquanto nas arestas ocorre geralmente quando foi adicionada alguma aresta onde o vértice dela não existe.
 
-Recomendo que não crie vértices nas mesmas coordenadas que vértices já existentes. Não que vá quebrar o jogo, este funcionará igualmente, pois não foi implementada alguma forma de barrar vértices no mesmo espaço físico que representariam no jogo, mas ficará ruim de jogar dado que a GUI não foi feita para este tipo de problema e acabará colocando as duas cidades no mesmo ponto, impossibilitando que se escolha uma delas. Além disso, é recomendado que se crie arestas para qualquer vértice adicionado. Novamente, o jogo foi preparado para impossibilitar que se jogue em uma cidade sem vizinhos, não chega a ser impossível, mas você só perderia automaticamente, pois isso é claramente o jogador tentando roubar criando uma cidade de vitória instantânea.
+Recomendo que não crie vértices nas mesmas coordenadas que vértices já existentes. Não que vá quebrar o jogo, este funcionará igualmente, pois não foi implementada alguma forma de barrar vértices no mesmo espaço físico que representariam no jogo, mas ficará ruim de jogar (se eles possuirem um mesmo vizinho) dado que a GUI não foi feita para este tipo de problema e acabará colocando as duas cidades no mesmo ponto, impossibilitando que se escolha uma delas. Além disso, é recomendado que se crie arestas para qualquer vértice adicionado. Novamente, o jogo foi preparado para impossibilitar que se jogue em uma cidade sem vizinhos, não ocorrerá nenhum erro, mas o jogador só perderia automaticamente, pois isso é claramente o jogador tentando roubar criando uma cidade de vitória instantânea.
 
-Uma limitação real é que o vértice não pode ter o mesmo nome que outro vértice, não ocasionará em erro, mas o vértice que vier depois no arquivo simplesmente não será adicionado ao Grafo.
+A única limitação real e que não daria erro é que o vértice não pode ter o mesmo nome que outro vértice, não ocasionará em erro como citado, mas o vértice que vier depois no arquivo simplesmente não será adicionado ao Grafo.
 
 ## Background do Jogo
 
-Como todo jogo precisa de um Backgruond, um simples foi criado para este, o background pode ser encontrado na aba About, junto com as Regras para a pessoa jogar. No entanto, para boa prática, colocaremos aqui também:
+Como todo jogo precisa de um Backgruond, um simples foi criado para este, o background pode ser encontrado na aba About, junto com as Regras para a pessoa jogar. No entanto, para boa prática, colocaremos aqui também, para que se entenda o que está ocorrendo no jogo que foi implementado.
 
-<p style="width:70%;text-align:justify;margin:auto;">Você é um general com grandes chances de perder o seu emprego<strike>, ou sua cabeça</strike>. Invadiram o território de seu país e agora você se vê em um único ponto, uma última cidade, sem chance alguma de reaver o território por inteiro sem a decorrência de grandes sacrifícios. Descrentes de sua inteligência e capacidade, seus últimos aliados contratam um grupo de pessoas, que claramente não sabia o que estava fazendo, para criar um algoritmo que tomasse a melhor decisão de qual local atacar em seguida. Você furioso, partiu com seus homens para mostrar que conseguiria tomar uma rota melhor do que a deste algoritmo maldito antes mesmo de ver seu resultado.<p><br>
+<blockquote>
+<p align=justify>Você é um general com grandes chances de perder o seu emprego<strike>, ou sua cabeça</strike>. Invadiram o território de seu país e agora você se vê em um único ponto, uma última cidade, sem chance alguma de reaver o território por inteiro sem a decorrência de grandes sacrifícios. Descrentes de sua inteligência e capacidade, seus últimos aliados contratam um grupo de pessoas, que claramente não sabia o que estava fazendo, para criar um algoritmo que tomasse a melhor decisão de qual local atacar em seguida. Você furioso, partiu com seus homens para mostrar que conseguiria tomar uma rota melhor do que a deste algoritmo maldito antes mesmo de ver seu resultado.<p>
 
-<p style="width:70%;text-align:justify;margin:auto;">War Graph é um jogo simples de tomada de decisões criado com o único objetivo de seus criadores utilizarem a estrutura de dados chamada Grafo. Seu objetivo primário neste jogo é conquistar uma área maior ou igual a do algoritmo utilizado (varia de acordo com a dificuldade escolhida).<p><br>
+<p align=justify>War Graph é um jogo simples de tomada de decisões criado com o único objetivo de seus criadores utilizarem a estrutura de dados chamada Grafo. Seu objetivo primário neste jogo é conquistar uma área maior ou igual a do algoritmo utilizado (varia de acordo com a dificuldade escolhida).<p>
 
-<p style="width:70%;text-align:justify;margin:auto;">Seus soldados possuem ❤️ (vida) e 🍗 (suprimentos) e gastam ambos para conquistar qualquer ponto que você vá no mapa. Suprimentos também são gastos para visitar bases já conquistadas. O gasto de 🍗 depende da 📏 (distância) percorrida, quanto mais longe, mais suprimentos serão gastos. Já a sua vida é gasta em combate, cada local possui sua própria infantaria de resistência e para ser conquistado é necessário que o seus soldados paguem com sua ❤️. Um adendo, também é possível perder vida por fome, caso você vá para um local tão distante que seus suprimentos acabem no meio da viagem, sua ❤️ começará a ser consumida no lugar.<p><br>
+<p align=justify>Seus soldados possuem ❤️ (vida) e 🍗 (suprimentos) e gastam ambos para conquistar qualquer ponto que você vá no mapa. Suprimentos também são gastos para visitar bases já conquistadas. O gasto de 🍗 depende da 📏 (distância) percorrida, quanto mais longe, mais suprimentos serão gastos. Já a sua vida é gasta em combate, cada local possui sua própria infantaria de resistência e para ser conquistado é necessário que o seus soldados paguem com sua ❤️. Um adendo, também é possível perder vida por fome, caso você vá para um local tão distante que seus suprimentos acabem no meio da viagem, sua ❤️ começará a ser consumida no lugar.<p>
 
-<p style="width:70%;text-align:justify;margin:auto;">Cada base a ser conquistada possui seu ⚔️ (poderio militar), 🍗 (suprimentos), 🩹 (medicamentos) e 🗺️ (área). Caso sobreviva a viagem e a batalha, após acabar com o ⚔️ adversário, seu exército recebe todos os outros recursos, que são somados a seus 🍗 (suprimentos), ❤️ (vida) e 🗺️ (área) respectivamente.<p><br>
+<p align=justify>Cada base a ser conquistada possui seu ⚔️ (poderio militar), 🍗 (suprimentos), 🩹 (medicamentos) e 🗺️ (área). Caso sobreviva a viagem e a batalha, após acabar com o ⚔️ adversário, seu exército recebe todos os outros recursos, que são somados a seus 🍗 (suprimentos), ❤️ (vida) e 🗺️ (área) respectivamente.<p>
 
-<p style="width:70%;text-align:justify;margin:auto;">Quando uma cidade nunca foi visitada, seu símbolo no mapa aparecerá com a <span style="color:#90EE90;">cor verde</span>, quando já foi visitada, irá aparecer com a <span style="color: lightcoral;">cor vermelha</span>, caso essa cidade seja uma base, após visitada ela aparecerá com a cor <span style="color: lightblue;">cor azul</span>, indicando que pode ser revisitada, porém o jogador não ganhará recursos o fazendo. O ponto que você está aparece com uma <span style="color:white">cor branca</span>.<p><br>
+<p align=justify>Quando uma cidade nunca foi visitada, seu símbolo no mapa aparecerá com a cor verde, quando já foi visitada, irá aparecer com a cor vermelha, caso essa cidade seja uma base, após visitada ela aparecerá com a cor azul, indicando que pode ser revisitada, porém o jogador não ganhará recursos o fazendo. O ponto que você está aparece com uma cor branca.<p>
 
-<p style="width:70%;text-align:justify;margin:auto;">Para vencer basta provar seu valor. Conquiste uma área no mínimo igual ao do algoritmo e mostre que seus aliados não deveriam desistir de você tão facilmente.<p><br>
+<p align=justify>Para vencer basta provar seu valor. Conquiste uma área no mínimo igual ao do algoritmo e mostre que seus aliados não deveriam desistir de você tão facilmente.<p></blockquote>
 
 ## Jogando
 
@@ -91,7 +88,7 @@ Após colocar o jogo para rodar, é necessário ir ao <a href="http://127.0.0.1:
 
 <p align=center><img src="imgs/menu.png" width="400px"/><p>
 
-O primeiro botão começará o jogo. O segundo botão levará o jogador a um menu de opções para que escolha qual cidade deseja iniciar o jogo. O terceiro botão leva o jogador a um menu de escolha das dificuldades possíveis para o jogo, sendo elas fácil, normal e difícil, a diferença entre elas para o jogador é meramente a quantidade de área que o jogador precisa conquistar para vencer o jogo. A diferença para o programador será comentada e explicada na sessão de <a href=#implementação>implementação</a>. O último botão, como mencionado anteriormente, levará a uma tela que explicará o jogo para o jogador.
+O primeiro botão começará o jogo. O segundo botão levará o jogador a um menu de opções para que escolha qual cidade (vértice do grafo) deseja iniciar o jogo. O terceiro botão leva o jogador a um menu de escolha das dificuldades possíveis para o jogo, sendo elas fácil, normal e difícil, a diferença entre elas para o jogador é meramente a quantidade de área que o jogador precisa conquistar para vencer o jogo. A diferença para o programador será comentada e explicada na sessão de <a href=#implementação>implementação</a>. O último botão, como mencionado anteriormente, levará a uma tela que explicará o jogo para o jogador.
 
 Ao iniciar o jogo, o jogador será levado para a tela a seguir:
 
@@ -247,7 +244,7 @@ Neste método o Grafo é resetado, para isso todos seus vértices são excluído
 
 O arquivos.py possui uma única função que é a de colher dados dos arquivos .csv e retorná-los para o usuário como um Grafo.
 
-Para fazer isso, a primeira etapa é a criação de um objeto da classe Grafo, após isso, começa a ler linha a linha do arquivo de vértices, onde ao fazer isso chama pela função de adicionar Vértice ao grafo. Após a leitura completa dos vértices, é feita a leitura das arestas. 
+Para fazer isso, a primeira etapa é a criação de um objeto da classe Grafo, após isso, é realizada uma leitura linha a linha do arquivo de vértices, onde ao fazer isso é chamada a função de adicionar Vértice ao grafo. Após a leitura completa dos vértices, é feita a leitura das arestas. 
 
 A validação de leitura de vértices e de leitura de arestas são feitas de forma separada para que fique mais fácil de visualizar qual arquivo está ocasionando em algum erro indesejado.
 
@@ -255,7 +252,11 @@ A validação de leitura de vértices e de leitura de arestas são feitas de for
 
 O jogo funciona com três dificuldades, sendo elas as dificuldades Fácil, Normal e Difícil. O objetivo dessas dificuldades é que um algoritmo um pouco mais complexo fosse executado para que a área final obtida fosse maior. Abaixo falarei qual foi a lógica usada para cada uma delas e o que poderia ser feito para melhorar ainda mais a dificuldade.
 
-Como dito no <a href="#problema-abordado">tópico Problema Abordado</a> o problema poderia ser tratado como multiobjetivo, no entanto neste trabalho foram utilizados algoritmos que se importam meramente com um objetivo, o de maximizar a área.
+Como dito na <a href="#introdução">introdução</a> o problema poderia ser tratado como multi objetivo dado que existem diversas variáveis que poderiam ser maximizadas no grafo, no entanto neste trabalho foram utilizados algoritmos que se importam meramente com um objetivo, o de maximizar a área. Além disso, para tentar tornar o jogo o mais justo possível para o jogador, como este não consegue ver quantos vizinhos o ponto futuro tem (por decisão do programador), os algoritmos implementados também caminham sem olhar se o ponto futuro possui vizinhos que podem ser visitados.
+
+Idealmente o jogador poderia visualizar todos os vértices do mapa para ter alguma noção de quais estão próximos de quais antes de tomar uma decisão, por mais que não soubesse o que tais pontos ofereceriam de recursos. Por exemplo, como estava no exército e as cidades foram tomadas, ele ainda deveria saber quais cidades Ribeirão Preto no exemplo da imagem em <a href=#jogando>jogando</a> pode visitar, por mais que ele não soubesse quantos recursos elas dão, pois sua rede de informações está limitada as cidades a seu entorno. No entanto, o aluno não conseguiu pensar em uma boa forma de fazer esse mapa maior como desejado, dado que mesmo o mapa pequeno para as poucas cidades consegue ter alguns problemas de cidades muito próximas.
+
+Caso houvesse conseguido pensar em uma forma de fazer isso, as funções apresentadas a seguir poderiam ser programadas de outra forma.
 
 ### Fácil
 
@@ -263,7 +264,7 @@ No modo Fácil o jogador jogará com o algoritmo Guloso mais simples possível, 
 
 ### Normal
 
-No modo Normal o jogador continuará jogando contra um algoritmo guloso bem simples, porém este não checará meramente qual o de maior área entre os vizinhos. Ele checará também se o jogador possui uma quantidade de vida maior do que o exército inimigo que será combatido, indo para a maior área que esta condição é atendida. Retornando assim a área final obtida pelo guloso e qual foi a rota que esse guloso fez.
+No modo Normal o jogador continuará jogando contra um algoritmo guloso bem simples, porém este não checará meramente qual o de maior área entre os vizinhos. Ele checará também se o jogador possui uma quantidade de vida maior do que o exército inimigo que será combatido, indo para a maior área que esta condição é atendida. Retornando assim a área final obtida pelo guloso e qual foi a rota que esse guloso fez. Com essa condição, é impossível que o modo Normal tenha alguma área final menor do que a do modo Fácil, sendo possível no máximo uma área igual onde os pontos andados sem medo de morte acabem levando o guloso a um beco sem saída.
 
 ### Difícil
 
@@ -275,15 +276,26 @@ Para essa avaliação é realizada a lógica simples de se começar na posição
 
 Caso a área da troca seja maior, esta nova rota é salva, e o loop das trocas recomeça do começo do vetor. Ao realizar todo o loop de troca sem executar alguma troca melhor, o programa finaliza.
 
-Com os 41 vértices que existem neste grafo colocado neste trabalho, junto das 97 arestas, o modo Difícil apresentou um resultado melhor do que o modo Normal em 26 deles. Este teste pode ser visto rodando a função testarDificuldades existente no graph.py.
+### Funções Auxiliares
+
+Algumas funções auxiliares foram criadas para trabalhar de forma mais fácil com as três dificuldades. Todas são simples e por isso passarei um breve resumo do que cada uma faz:
+
+* funcao_medio: A mais simples de todas, é a avaliação do guloso no nível Normal, que realiza a comparação citada no <a href=#normal>normal</a>, caso o jogador vá morrer, retorna que o valor de área do local é -1, se não, retorna o valor de área real;
+* troca: Realiza as trocas no vetor de rota comentadas <a href=#difícil>difícil</a>;
+* testarRota: Após realizada a troca, o nível difícil precisa testar se aquela nova rota criada é melhor ou pior que a melhor rota atual. Para checar a área dessa nova rota é utilizada essa função, que meramente percorre o vetor de rota sempre tentando mover o personagem para a próxima posição, realizando sempre que possível e contabilizando as cidades visitadas e qual foi a área final;
+* apos_escolha: Sempre que algum nó foi escolhido como destino do personagem, é necessário que diversas funções do personagem rodem na ordem estabelecida no <a href=#background-do-jogo>background do jogo</a> para atualizar todos os seus valores, essa função juntou todas elas na sequência correta citada;
+* zerarNo: Sempre que um vértice é visitado, ele precisa ser "limpo", ou seja, ele não pode fornecer mais área, suprimentos e medicamentos para o jogador, isso foi criado para que bases não abasteçam infinitamente o jogador dado que podem ser revisitadas;
+* testarDificuldades: Por último, era necessário verificar se o modo difícil realmente estava performando melhor do que o médio e o fácil. Essa função foi criada para rodar os três modos em todos os vértices e contabilizar em quantos cada um ganhava. Por isso é possível afirmar que com os 41 vértices e 97 arestas, que estão no github, o modo Difícil apresentou um resultado melhor do que o modo Normal em 26 deles. Claro que com possíveis adições de vértices/arestas ou possíveis mudanças nos valores que existem atualmente poderão alterar o desempenho do Difícil.
 
 ### Outras formas de modificar a dificuldade
 
-Seria possível realizar métodos gulosos diferentes no Fácil e no Normal, que ao invés de só olharem a área ganha, olhassem para o ponto vizinho onde o jogador "sofreria" menos, indo para o ponto onde o balanço de exército inimigo e medicamentos fosse próximo, e o quanto o jogador perderá com a distância é compensado pelos suprimentos do local. 
+Além do citado anteriormente, com a mudança do mapa, que poderia modificar a forma de pensar como um todo do programa, existem outras formas de alterar o resultado do modo Difícil, já que este não foi perfeito, por isso, novas formas de como realizar as dificuldades começaram a ser imaginadas com a restrição do mapa existente.
 
-Outra ideia possível seria visitar o vizinho que possui a maior razão área/vida perdida ao visitar o ponto, ao invés de só ir para o ponto com a maior área.
+Seria possível realizar métodos gulosos diferentes no Fácil e no Normal, que ao invés de só olharem a área ganha, olhassem para o ponto vizinho onde o jogador "sofreria" menos, indo para o ponto onde o balanço de exército inimigo e medicamentos fosse o mais vantajoso possível, outra alternativa seria o quanto o jogador perderá com a distância é compensado pelos suprimentos do local. Talvez, pensando em sobreviver o máximo possível, acabe sem querer, maximizando a área conquistada no processo.
 
-Para o modo Difícil, imaginando que não foram alterados os anteriores, os pontos que são Bases poderiam ser adicionados mais de uma vez (até mesmo os já visitados), pois é possível que durante as trocas tenha alguma situação onde voltando uma vez para uma base acabasse indo para outro vértice depois e melhorasse, mas não é possível somente adicionando todos os pontos não visitados uma vez. 
+Outra ideia possível seria visitar o vizinho que possui a maior razão área ganha/vida perdida ao visitar o ponto, ao invés de só ir para o ponto com a maior área. Esta solução é tão direta quanto a já implementada, sem grandes comentários.
+
+Para o modo Difícil, imaginando que não foram alterados os anteriores, os pontos que são Bases poderiam ser adicionados mais de uma vez (até mesmo os já visitados), pois é possível que durante as trocas tenha alguma situação onde voltando uma vez para uma base acabasse indo para outro vértice que ela consegue ver e assim a rota melhorasse, mas não é possível somente adicionando todos os pontos não visitados uma vez. 
 
 Outra forma é de executar uma troca dupla, onde poderia ocorrer com algum ponto talvez até mesmo aleatório, ao invés de só testar se uma troca é o suficiente para melhorar o resultado final do algoritmo.
 
@@ -307,5 +319,108 @@ Além desta função, anteriormente existiam duas outras funções, uma para det
 
 Outra função que se tornou obsoleta, foi mais pela necessidade de se fazer as dificuldades. Anteriormente o combate ocorreria ou não dependendo da distância que o jogador percorresse até o outro vértice. Como se havendo um exército inimigo que defende uma cidade vindo do ponto que você está, você gastando mais tempo para chegar lá indica que houvesse mais tempo para que este exército circundasse na cidade e visse o seu exército chegando. No entanto, sendo probabilidade de chance de ocorrer, ficaria difícil de fazer uma dificuldade, dado que o algoritmo poderia acabar combatendo em vértices que o jogador não e vice versa, tornando-se um problema complicado de se pensar em como setar e que começaria a fugir muito do escopo do trabalho.
 
-## Telas (views.py)
+## Telas
 
+Em Django existe um processo para as urls que se pode visitar e o que são vistas nelas.
+
+Antes de continuar, é necessário citar que Django permite criar páginas dinamicamente, colocando variáveis ou até if's e for no HTML que se encontra em `...\Representando-e-Caminhando-em-Grafos\WarGraph\Game\templates`, por isso é possível que diferentes urls utilizem o mesmo template e mesmo assim apresentem coisas ao jogador completamente diferentes.
+
+### URLS (urls.py)
+
+Para que se possa visitar uma URL em Django, é necessário que esta seja adicionada em `urls.py`. Neste arquivo se encontra uma lista de urls, onde cada item dela é um path. O path é feito por 3 partes, a primeira é o endereço que ela possui, o segundo é qual função no `views.py` ela chama, e a terceira é o nome deste path para caso seja chamado por outras funções. No `urls.py` do Game pode-se ver todos os endereços criado para o jogo, porém, caso se pesquise, é possível ver que existe um `urls.py` na pasta vizinha a pasta Game, a WarGraph. Como WarGraph é o projeto como um todo, ao ir ao link puro, acabaríamos caindo no index do projeto. No entanto, como só existe um aplicativo instalado neste projeto Django, foi colocado intencionalmente que o link puro aponte para o index do aplicativo em questão.
+
+### HTML
+
+Só foram necessários 4 templates HTML para o funcionamento do jogo. São eles:
+
+* about.html
+* fim.html
+* jogo.html
+* menu.html
+
+O primeiro é o único estático, ele contém as informações citadas no <a href=#background-do-jogo>background do jogo</a>, para que o jogador saiba como jogar ou o que aconteceu.
+
+O segundo possui uma série de if's que vão verificar qual foi o motivo do final do jogo e assim apresentar a tela correta ao jogador a depender de qual foi o final, as únicas variáveis que recebe são as que precisa para entender qual final foi, como vida do personagem, área do personagem, área que era o objetivo, número de vizinhos que o ponto atual possuía.
+
+O terceiro é a tela principal do jogo, este é um dos que possui sua maior costumização, a cada vez que é carregada é feito um novo html com python a depender do ponto atual do jogador. Este html é inserido na parte preta, que é o mapa. Tudo que está envolta é "fixo", ou seja, sempre estão ali, mas seus valores mudam pois dependem das variáveis no momento.
+
+O quarto é o template que possui a maior customização de todos. Ele aceita um grande bloco de html no meio. A única coisa que é constante entre os diferentes menus do jogo são os `.css` que são aplicados a eles. Pois cada menu apresenta opções completamente diferentes ao usuário.
+
+### Views (views.py)
+
+Como citado anteriormente, cada url chama uma função no views. São 11 urls, então são 11 funções no views. Aqui citarei cada uma.
+
+#### index
+
+A página inicial, como mostrada na figura na parte de <a href=#jogando>jogando</a>, possui 4 botões que levam para outras páginas. O index cria uma string que vai colocando o html como string passo a passo e envia essa string para o template menu, que transforma esta string em HTML. Esses botões direcionam para as views: `start`, `cidade`, `dificuldade` e `about` respectivamente.
+
+#### dificuldade
+
+A página de dificuldade é basicamente igual a página de index, só que ao invés de 4 botões são 3, um para cada dificuldade programada, e elas direcionam para a view `esc_dificuldade`, colocando as palavras facil, media e dificil como o argumento `escolha` que podia ser visto no `urls.py` da view esc_dificuldade, dado que a sua url era: `dificuldade/<str:escolha>`.
+
+#### esc_dificuldade
+
+Escolhendo dificuldade seta o valor da variável global `mode` para 1, 2 ou 3 a depender de qual escolha o usuário fez no menu Dificuldade. Após isso, manda renderizar o resultado da função `index`.
+
+#### cidade
+
+A página de cidade também é muito parecido com as outras duas que são menus, a sua única exceção é que foi criada de forma a ter três colunas de botões dado que existem muitas cidades. Caso ainda mais sejam inseridas, é possível começar a pensar em um formulário para escolher qual cidade se deseja começar. Neste menu também é adicionada uma opção inicial, sendo a Aleatória.
+
+Todos os botões possuem o nome da cidade em seu link, pois igual a view dificuldade e esc_dificuldade, a view esc_cidade possui o parâmetro `escolha` em sua url.
+
+#### esc_cidade
+
+Escolhendo cidade seta o valor da variável global `inicial` para o nome da cidade escolhida pelo usuário. Após isso, manda renderizar o resultado da função `index`.
+
+#### start
+
+A função que inicia o jogo. Não possui um render próprio.
+
+Ela começa inicializando o personagem na localização que estiver na variável global `inicial` no momento. Após a criação do personagem, o vértice inicial é zerado.
+
+É checado se o ponto inicial do jogador possui algum vizinho. Se não possuir, é mandado renderizar o resultado da função `fim`. Como é necessário para o fim que exista a variável global `area_obj` e `rota`, ambas são setadas como a área do personagem e o caminho do personagem antes de ser mandado renderizar o resultado da função.
+
+Caso o ponto inicial possua vizinhos, as variáveis globais `area_obj` e `rota` são criadas com a chamada da função de dificuldade que é especificada pela variável global `mode`.
+
+Então é chamado o render da função `jogo`.
+
+#### jogo
+
+Jogo é basicamente a criação do html do mapa central. Onde é criado o HTML como uma string, iguais aos procedimentos do menu, mas preenchendo cada vértice vizinho e o próprio atual com suas próprias informações. Cálculos são feitos para tentar posicionar cada ponto em uma coordenada adequada utilizando o `position:fixed`. Além disso, a variável Opções da classe jogador começa a ser somada 1 para cada vértice que é possível de se visitar. Esses vértices que podem ser visitados possuem um link para a url `escolha/<str:nome>`, onde nome é o nome do Vértice em questão.
+
+Ao final da criação do HTML, caso Opções continue igual a zero, é chamada a função `fim`, pois o jogador não possui opções para andar.
+
+Caso opções não seja 0, zere após passar do teste, para na próxima vez que for utilizar esteja tudo ok ou não.
+
+Com isso tudo feito, é realizado o render da página jogo, passando não só a string que contém o HTML, como o personagem, para seus dados serem colhidos, a área objetivo, a porcentagem de área já completada e a cor da barrinha de área.
+
+#### escolha
+
+Ao clicar em uma das cidades possíveis de se visitar, a função escolha é chamada.
+
+Nesta função é realizado basicamente o mesmo passo a passo que existe na função auxiliar após escolha do `graph.py`:
+
+* É checada a distância do ponto atual do personagem para a escolha;
+* O personagem é movido até lá, ou seja, é chamado o método `att_sup` do personagem;
+* Caso o ponto não tenha sido visitado, o personagem luta para dominar o ponto, ou seja, é chamado o método `apos_luta` do personagem;
+* É checada a vida do personagem e caso seja menor ou igual a zero, a função `fim` é chamada;
+* Novamente, se o vértice não tiver sido visitado, o personagem o conquista, ou seja, o método `conquistando` do personagem é chamado;
+* O vértice escolhido é zerado;
+* A variável visitado dele é marcada como True, sendo que só escrevendo o readme agora lembrei que havia criado uma função só para isso;
+* É atualizada a localização do personagem;
+* Checada se a área do personagem atingiu o objetivo, e caso tenha, a função `fim` é chamada;
+* Se não tiver sido atingida, a função `jogo` é chamada novamente, para que o jogador possa continuar jogando.
+
+#### fim
+
+Como citado na parte de HTML, a página fim precisa de algumas variáveis para determinar qual foi o fim que a chamou. Por isso esta função meramente renderiza a página passando as variáveis para ela.
+
+Uma forma de modificar isso seria modificando a view, como fim/\<int:tipo\>, onde cada final enviaria um inteiro diferente para essa nova view para simbolizar o fim específico que o jogador teve. Não seria necessário enviar as variáveis (apesar de que seria de bom gosto, dado que é legal o jogador ver como o jogo acabou), sendo só necessário que o template tivesse um if para ver qual número é e mostrasse o final correto, sem ter que ficar verificando.
+
+#### reset
+
+O reset reseta o grafo atual, para retornar todos os vértices ao que eram no começo, antes de serem visitados e terem suas variáveis zeradas, além de apagar o personagem. Em seguida, manda renderizar o resultado da função `index, que foi a primeira citada aqui.
+
+#### about
+
+A chamada de função mais fácil, simplesmente é um render da página html `about.html`, pois como citado, esta é a única página realmente estática do programa.

@@ -12,10 +12,10 @@
     </head>
     <body>
         <div class="jogo">
-            <h1 class="pontoatual">Você está em {{ localizacao }}</h1>
-            <div class="dados"><span><h3>Status Atuais:</h3></span><span>❤️: {{vida}}</span><span>🍗: {{suprimentos}}</span></div>
+            <h1 class="pontoatual">Você está em {{ p.Localizacao }}</h1>
+            <div class="dados"><span><h3>Status Atuais:</h3></span><span>❤️: {{p.Vida}}</span><span>🍗: {{p.Suprimentos}}</span></div>
             <div class="mapa"><div class="auxMapa">{{mapa | safe}}</div></div>
-            <div class="barra">Progresso Área Conquistada:<div class="progress-bar"><div class="{{cor}}" style="width:{{porcentagem}}%;">{{ area }}/{{ area_obj }}</div></div></div>
+            <div class="barra">Progresso Área Conquistada:<div class="progress-bar"><div class="{{cor}}" style="width:{{porcentagem}}%;">{{ p.Area }}/{{ area_obj }}</div></div></div>
             <div class="desistir"><div class="middle" style="margin-top: 0%;"><a href="{% url 'fim' %}" class="btn btn4">Desisto</a></div></div>
         </div>
     </body>

@@ -97,6 +97,12 @@ def start(request):
     else:
         p = classes.Personagem(g.randomVertice(),g) # Inicia o Personagem com uma cidade randômica
 
+        
+    if len(g.vertices[p.Localizacao].Vizinhos) == 0:
+        area_obj = p.Area
+        rota = p.Caminho
+        return HttpResponseRedirect(reverse('fim',None))
+    
     # p.print_personagem()
 
     graph.zerarNo(g,p.Localizacao)    
@@ -107,9 +113,6 @@ def start(request):
         area_obj, rota = graph.guloso_medio(g2,p)
     else:
         area_obj, rota = graph.guloso_dificil(g2,p)
-
-    if len(g.vertices[p.Localizacao].Vizinhos) == 0:
-        return HttpResponseRedirect(reverse('fim',None))
 
     return HttpResponseRedirect(reverse('jogo',None))
 
@@ -193,10 +196,7 @@ def jogo(request):
         cor = "verde"
 
     return render(request, "jogo.html", {
-        "localizacao": p.Localizacao,
-        "vida": p.Vida,
-        "area": p.Area,
-        "suprimentos": p.Suprimentos,
+        "p": p,
         "mapa": mapa,
         "area_obj": area_obj,
         "porcentagem": porcentagem,
